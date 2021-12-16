@@ -10,8 +10,8 @@ records = Blueprint('records', __name__, template_folder='templates') #аргу�
 
 @records.route('/')
 def index():
-    msfo = Records.query.all()
-    return render_template('records/index.html', records=msfo)
+    records = Records.query.all()
+    return render_template('records/index.html', records=records)
 
 # поиск слага в б.д.
 @records.route('/<slug>')

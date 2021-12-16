@@ -16,7 +16,7 @@
         <!-- в функции url_for указывается обработчик блюпринта records, функция record_detail в которую
              передаётся переменная slug как аргумент, в свою очередь slug получает значение внутри этого цикла
              из свойства объекта record.slug-->
-        <a href="{{ url_for('records.record_detail, slug=record.slug') }}">{{ record.company_name }}</a>
+        <a href="{{ url_for('records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a>
     </p>
     {% endfor %}
 {% endblock %}
