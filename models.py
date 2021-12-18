@@ -3,6 +3,7 @@ from datetime import datetime
 import re
 
 
+
 def slugify(s):
     # r сообщает интерпретатору считывать знаки и символы "как есть"
     pattern = r'[^\w+]'
@@ -36,3 +37,7 @@ class Records(data_base.Model):
 
     def __repr__(self):
         return f'<Record id: {self.id}, title: {self.company_name}>'
+
+
+
+
