@@ -1,22 +1,28 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    blueprints page
+    Таблица отчётов.
 {% endblock %}
 
 {% block content_title %}
-    Таблица отчётов МСФО/РСБУ
+    Таблица отчётов МСФО/РСБУ.
 {% endblock %}
 
 
-<!-- в этом блоке циклом выводятся записи из б.д. и сслыка slug на детализацию каждой записи -->
+<!-- в этом блоке циклом выводятся записи из б.д.  -->
 {% block table_content %}
     {% for record in records %}
     <p>
-        <!-- в функции url_for указывается обработчик блюпринта records, функция record_detail в которую
-             передаётся переменная slug как аргумент, в свою очередь slug получает значение внутри этого цикла
-             из свойства объекта record.slug-->
-        <a href="{{ url_for('records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a>
+        <!-- на название компании навешивается ссылка которая переадресует на функцию record_detail
+         и передаёт в функцию аргумент slug из записи б.д. объекта record,
+         перейдя по ссылке мы попадём на страницу детальной информации -->
+        <a href="{{ url_for('records.record_detail', slug=record.slug) }}">
+            {{ record.company_name }}
+        </a>
+            {{ record.short_info }}
+            {{ record.long_info }}
+            {{ record.updated }}
+
     </p>
     {% endfor %}
 {% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ record.company_name }}
+{% endblock %}
+
+
+{% block content_title %}
+    {{ record.company_name }}
+{% endblock %}
+
+
+{% block table_content %}
+    {{ record.id }}
+    {{ record.short_info }}
+    {{ record.long_info }}
+    {{ record.updated }}
+{% endblock %}

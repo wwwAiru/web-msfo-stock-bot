@@ -9,7 +9,7 @@ def slugify(s):
     # ищет по шаблону pattern меняет на "-" в переменной s
     return re.sub(pattern, '-', s)
 
-
+# Модель запросов в б.д.
 class Records(data_base.Model):
     # столбцы базы
     id = data_base.Column(data_base.Integer, primary_key=True)
@@ -20,7 +20,7 @@ class Records(data_base.Model):
     short_info = data_base.Column(data_base.Text)
     # полный отчёт(ссылка)
     long_info = data_base.Column(data_base.String(300))
-    updated = data_base.Column(data_base.DateTime, default=datetime.now())
+    updated = data_base.Column(data_base.DateTime, default=datetime.now().strftime("%d-%m-%Y- %H:%M:%S"))
 
     # *args список позиционных аргументов, **kwargs словарь именованных аргументов
     def __init__(self, *args, **kwargs):
