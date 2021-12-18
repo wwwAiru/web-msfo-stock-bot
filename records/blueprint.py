@@ -6,7 +6,8 @@ from models import Records
 
 # блюпринт кусок изолированной функциональности
 # record обработчик блюпринта
-records = Blueprint('records', __name__, template_folder='templates') #аргументы: название блюпринта, приложение, и путь к шаблонам
+# аргументы: название блюпринта, приложение, и путь к шаблонам
+records = Blueprint('records', __name__, template_folder='templates')
 
 
 # страница представления таблицы
