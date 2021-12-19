@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Добавить компанию.
+{% endblock %}
+
+{% block content_title %}
+
+{% endblock %}
+
+{% block table_content %}
+<!-- циклом выводятся поля формы из бэка в скобках можно каждому полю присвоить класс из CSS стилей-->
+  <form action="{{ url_for('records.create_record')}}" method="POST">
+      {% for field in form %}
+          <div class="form-group">
+              {{ field.label(class="control-label") }}
+              {{ field(class="form-control") }}
+          </div>
+      {% endfor %}
+              <button type="submit" class="btn btn-primary">Добавить</button>
+  </form>
+{% endblock %}>
