@@ -27,10 +27,15 @@
           </li>
         </ul>
 
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex" method="GET">
+            <!-- name="search" - задаём имя переменной, request - это глобальный зарезервированный объект flask'a,
+            метод args - словарь объекта request, метод словаря get выдаёт значению по ключу search, если ничего нет,
+             передаётся в бэк пустая строка -->
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                 name="search" value="{{ request.args.get('search', '') }}">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
+
       </div>
     </div>
   </nav>
