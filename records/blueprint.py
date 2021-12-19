@@ -2,13 +2,20 @@ from flask import Blueprint
 from flask import render_template
 from models import Records
 from flask import request
-
+from .forms import Record_form
 
 
 # блюпринт кусок изолированной функциональности
 # record обработчик блюпринта
 # аргументы: название блюпринта, приложение, и путь к шаблонам
 records = Blueprint('records', __name__, template_folder='templates')
+
+
+@records.route('/create_record', methods = ['POST', 'GET'])
+def create_record():
+    form = Record_form()
+    return render_template('records/create_record.html', form=form)
+
 
 
 # страница представления таблицы
