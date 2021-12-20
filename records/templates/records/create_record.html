@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block table_content %}
-<!-- циклом выводятся поля формы из бэка в скобках можно каждому полю присвоить класс из CSS стилей-->
+<!-- циклом выводятся поля формы из бэка, в скобках можно каждому полю присвоить класс из CSS стилей-->
   <form action="{{ url_for('records.create_record')}}" method="POST">
       {% for field in form %}
           <div class="form-group">
