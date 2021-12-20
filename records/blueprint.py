@@ -1,8 +1,7 @@
-from flask import Blueprint
-from flask import render_template
+from flask import Blueprint, render_template, request, redirect, url_for
 from models import Records
-from flask import request
 from .forms import Record_form
+from app import data_base
 
 
 # блюпринт кусок изолированной функциональности
@@ -13,6 +12,17 @@ records = Blueprint('records', __name__, template_folder='templates')
 
 @records.route('/create_record', methods = ['POST', 'GET'])
 def create_record():
+    if request.method == 'POST':
+        company_name = request.form['company_name']
+        short_info = request.form['short_info']
+        long_info = request.form['long_info']
+        try:
+            record = Records(company_name=company_name, short_info=short_info, long_info=long_info)
+            data_base.session.add(record)
+            data_base.session.commit()
+        except:
+            print('Ошибка записи в базу данных.')
+        return redirect( url_for('records.index') )
     form = Record_form()
     return render_template('records/create_record.html', form=form)
 
@@ -30,6 +40,10 @@ def index():
     # иначе рендерится страница со всеми записями
     else:
         records = Records.query.all()
+        # тут небольшое форматирование вывода даты, мне удобно в формате: день.месяц.год
+        # можно настроить в любом удобном формате
+        for record in records:
+            record.updated=record.updated.strftime("%d.%m.%Y %H:%M:%S")
     return render_template('records/index.html', records=records)
 
 # поиск по слагу в б.д. <...> - это переменная динамической ссылки
