@@ -3,7 +3,7 @@ from datetime import datetime
 import re
 
 
-
+# функция слагификации
 def slugify(s):
     # r сообщает интерпретатору считывать знаки и символы "как есть"
     pattern = r'[^\w+]'
@@ -21,7 +21,8 @@ class Records(data_base.Model):
     short_info = data_base.Column(data_base.Text)
     # полный отчёт(ссылка)
     long_info = data_base.Column(data_base.String(300))
-    updated = data_base.Column(data_base.DateTime, default=datetime.now().strftime("%d-%m-%Y- %H:%M:%S"))
+    # дата и время добавления в б.д.
+    updated = data_base.Column(data_base.DateTime, default=datetime.now())
 
     # *args список позиционных аргументов, **kwargs словарь именованных аргументов
     def __init__(self, *args, **kwargs):
