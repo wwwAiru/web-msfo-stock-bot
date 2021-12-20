@@ -39,7 +39,7 @@ def index():
         records = Records.query.filter(Records.company_name.contains(search) | Records.short_info.contains(search)).all()
     # иначе рендерится страница со всеми записями
     else:
-        records = Records.query.all()
+        records = Records.query.order_by(Records.updated.desc()).all()
         # тут небольшое форматирование вывода даты, мне удобно в формате: день.месяц.год
         # можно настроить в любом удобном формате
         for record in records:
