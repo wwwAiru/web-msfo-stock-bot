@@ -9,20 +9,37 @@
 {% endblock %}
 
 
-<!-- в этом блоке циклом выводятся записи из б.д.  -->
+
 {% block table_content %}
-    {% for record in records %}
+<!-- циклом выводятся записи из б.д. постранично, записи берутся из объекта pages-->
+    {% for record in pages.items %}
     <p>
-        <!-- на название компании навешивается ссылка которая переадресует на функцию record_detail из вью records.
-         и передаёт в функцию аргумент slug из записи б.д. объекта record,
-         перейдя по ссылке мы попадём на страницу детальной информации -->
-        <a href="{{ url_for('records.record_detail', slug=record.slug) }}">
-            {{ record.company_name }}
-        </a>
+        <!-- на название компании навешивается ссылка, которая переадресует на страницу record_detail.html,
+        для этого в функцию record_detail из вью records.
+        и передаёт в функцию аргумент slug которому присваивается значение поля slug(то что в б.д.) объекта record,
+        перейдя по ссылке мы попадём на страницу детальной информации о компании -->
+        <a href="{{ url_for('records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a>
             {{ record.short_info }}
             {{ record.long_info }}
-            {{ record.updated }}
+            <!--тут небольшое форматирование вывода даты, мне удобно в формате: день.месяц.год
+            можно настроить в любом удобном формате-->
+            {{ record.updated.strftime("%d.%m.%Y %H:%M:%S") }}
 
     </p>
     {% endfor %}
+<!-- Пагинация -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li {% if not pages.has_prev %} class="page-item disabled" {% endif %}>
+      <a class="page-link href="./?page={{ pages.prev_num }}"">Previous</a>
+    </li>
+    <li class="page-item"><a class="page-link" >1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+
 {% endblock %}
