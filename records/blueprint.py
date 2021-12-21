@@ -31,20 +31,29 @@ def create_record():
 # страница представления таблицы
 @records.route('/', methods = ['POST', 'GET'])
 def index():
+    page = request.args.get('page')
+    # проверка значения переменной page, если переменная не пустая и является цифрой, тогда приводим её к целочисленному типу
+    # иначе страница будет первой
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
     # в переменную search считывается то, что пользователь ввёл в строку поиска
+    search = request.args.get('search')
+    # принимаем в переменную page объект request со значениями из фронтенда
     # далее условие: если переменная search содержит что - либо, тогда у класса Records - модели запросов в б.д.
     # запрашиваем данные по сравниванию пользовательского запроса с именами компаний или содержанию краткого отчёта
-    search = request.args.get('search')
     if search:
-        records = Records.query.filter(Records.company_name.contains(search) | Records.short_info.contains(search)).all()
+        records = Records.query.filter(Records.company_name.contains(search) | Records.short_info.contains(search))
     # иначе рендерится страница со всеми записями
     else:
-        records = Records.query.order_by(Records.updated.desc()).all()
-        # тут небольшое форматирование вывода даты, мне удобно в формате: день.месяц.год
-        # можно настроить в любом удобном формате
-        for record in records:
-            record.updated=record.updated.strftime("%d.%m.%Y %H:%M:%S")
-    return render_template('records/index.html', records=records)
+        records = Records.query.order_by(Records.updated.desc())
+    # records является объектом BaseQuery одним из его методов является paginate()
+    # он принимает три именованых аргумента: 1- номер страницы
+    # 2- количество записей из б.д. (сколько записей будет на каждой странице)
+    # 3- error_out - установлен по умолчанию в True, сигнализирует об ошибках
+    pages = records.paginate(page=page, per_page=2)
+    return render_template('records/index.html', records=records, pages=pages)
 
 # поиск по слагу в б.д. <...> - это переменная динамической ссылки
 @records.route('/<slug>')
