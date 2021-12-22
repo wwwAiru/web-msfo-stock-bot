@@ -1,6 +1,6 @@
 from app import app
 from app import data_base
-from records.blueprint import records
+from records.content_blueprint import records
 import view
 
 
