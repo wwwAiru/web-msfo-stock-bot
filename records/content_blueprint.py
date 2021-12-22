@@ -21,7 +21,7 @@ def create_record():
             data_base.session.add(record)
             data_base.session.commit()
         except:
-            db.session.rollback()
+            data_base.session.rollback()
             print('Ошибка записи в базу данных.')
         return redirect( url_for('records.index') )
     form = Record_form()
