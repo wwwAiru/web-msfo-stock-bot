@@ -11,33 +11,68 @@
 
 
 {% block table_content %}
-<!-- циклом выводятся записи из б.д. постранично, записи берутся из объекта pages-->
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Компания</th>
+            <th scope="col">Краткий отчёт</th>
+            <th scope="col">Ссылка на полный отчёт</th>
+            <th scope="col">Дата обновления</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <!-- циклом выводятся записи из б.д. постранично, записи берутся из объекта pages-->
     {% for record in pages.items %}
-    <p>
         <!-- на название компании навешивается ссылка, которая переадресует на страницу record_detail.html,
         для этого в функцию record_detail из вью records.
         и передаёт в функцию аргумент slug которому присваивается значение поля slug(то что в б.д.) объекта record,
         перейдя по ссылке мы попадём на страницу детальной информации о компании -->
-        <a href="{{ url_for('records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a>
-            {{ record.short_info }}
-            {{ record.long_info }}
+        <tr>
+            <td><a href="{{ url_for('records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a></td>
+            <td> {{ record.short_info }}</td>
+            <td> {{ record.long_info }}</td>
+
             <!--тут небольшое форматирование вывода даты, мне удобно в формате: день.месяц.год
             можно настроить в любом удобном формате-->
-            {{ record.updated.strftime("%d.%m.%Y %H:%M:%S") }}
-
-    </p>
+            <td> {{ record.updated.strftime("%H:%M:%S %d.%m.%Y") }}</td>
+        </tr>
     {% endfor %}
+    </tbody>
+    </table>
+
+
 <!-- Пагинация -->
 <nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
+  <ul class="pagination pagination-lg">
+    <!-- Проработка кнопки "предидущая страница".
+    Условие: если метод has_prev объекта pages - пуст, тогда проявить class="page-item disabled"  -->
     <li {% if not pages.has_prev %} class="page-item disabled" {% endif %}>
-      <a class="page-link" href="./?page={{ pages.prev_num }}">Предидущая</a>
+        <!-- ссылка адресует на страницу из метода prev_num(он динамический) -->
+      <a class="page-link" href="./?page={{ pages.prev_num }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
     </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Следующая</a>
+
+      <!-- тут циклом выводятся номера страниц из объекта pages методом-итератором iter_pages()
+       этот метод может принимать 4 аргумента, у них есть дефолтные значения,
+       они проявятся если страниц будет слишком много, например появятся многоточия и разделения по количеству страниц
+       до и после многоточия, задав значения аргументов можно регулировать как удобно. -->
+      {% for page in pages.iter_pages() %}
+
+      <!-- Проверка является ли page текущей страницей, если да, то проявить class="page-item active" -->
+    <li {% if page == pages.page %} class="page-item active" {% endif %}>
+
+       <!-- в двойных фигурных скобках просто переменная номера страницы -->
+        <a class="page-link" href="./?page={{ page }}">{{ page }}</a></li>
+      {% endfor %}
+
+      <!-- Проработка кнопки "следующая страница".
+      Делается по аналогии кнопки "предидущая страница" только зеркально  -->
+    <li {% if pages.has_next %} class="page-item" {% else %} class="page-item disabled" {% endif %}>
+      <a class="page-link" href="./?page={{ pages.next_num }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
     </li>
   </ul>
 </nav>
