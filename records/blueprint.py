@@ -9,7 +9,7 @@ from app import data_base
 # аргументы: название блюпринта, приложение, и путь к шаблонам
 records = Blueprint('records', __name__, template_folder='templates')
 
-
+# страница добавление компании.
 @records.route('/create_record', methods = ['POST', 'GET'])
 def create_record():
     if request.method == 'POST':
@@ -21,6 +21,7 @@ def create_record():
             data_base.session.add(record)
             data_base.session.commit()
         except:
+            db.session.rollback()
             print('Ошибка записи в базу данных.')
         return redirect( url_for('records.index') )
     form = Record_form()
@@ -28,7 +29,7 @@ def create_record():
 
 
 
-# страница представления таблицы
+# страница представления контента(таблицы)
 @records.route('/', methods = ['POST', 'GET'])
 def index():
     # принимаем в переменную page объект request со значениями из фронтенда
