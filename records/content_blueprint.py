@@ -9,9 +9,12 @@ from app import data_base
 # аргументы: название блюпринта, приложение, и путь к шаблонам
 records = Blueprint('records', __name__, template_folder='templates')
 
-# страница добавление компании.
-@records.route('/create_record', methods = ['POST', 'GET'])
-def create_record():
+
+
+# страница представления контента(таблицы)
+@records.route('/', methods = ['POST', 'GET'])
+def index():
+    # добавление компании.
     if request.method == 'POST':
         company_name = request.form['company_name']
         short_info = request.form['short_info']
@@ -25,13 +28,7 @@ def create_record():
             print('Ошибка записи в базу данных.')
         return redirect( url_for('records.index') )
     form = Record_form()
-    return render_template('records/create_record.html', form=form)
 
-
-
-# страница представления контента(таблицы)
-@records.route('/', methods = ['POST', 'GET'])
-def index():
     # принимаем в переменную page объект request со значениями из фронтенда
     page = request.args.get('page')
     # проверка значения переменной page, если переменная не пустая и является цифрой,
@@ -56,7 +53,7 @@ def index():
     # 2- количество записей из б.д. (сколько записей будет на каждой странице, установил пока что 5)
     # 3- error_out(можно не указывать явно) - установлен по умолчанию в True, сигнализирует об ошибках
     pages = records.paginate(page=page, per_page=5)
-    return render_template('records/index.html', pages=pages)
+    return render_template('records/index.html', form=form, pages=pages)
 
 
 
