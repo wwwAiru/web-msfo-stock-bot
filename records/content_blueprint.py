@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from models import Records
 from .forms import Record_form
 from app import data_base
+from datetime import datetime
 
 
 # блюпринт кусок изолированной функциональности
@@ -12,7 +13,7 @@ records = Blueprint('records', __name__, template_folder='templates')
 
 
 # страница представления контента(таблицы)
-@records.route('/', methods = ['POST', 'GET'])
+@records.route('/', methods=['POST', 'GET'])
 def index():
     # добавление компании.
     if request.method == 'POST':
@@ -55,6 +56,24 @@ def index():
     pages = records.paginate(page=page, per_page=5)
     return render_template('records/index.html', form=form, pages=pages)
 
+# роут для формы редактирования записи
+@records.route('/<slug>/edit/', methods=['POST', 'GET'])
+def edit_record(slug):
+    # получаем данные конкретной компании по слагу
+    record = Records.query.filter(Records.slug == slug).first()
+    # добавил отдельно обновление даты т.к. в формах дата не указывается, а генерится автоматически.
+    record.updated = datetime.now()
+    # при пост запросе получаем в форму html данные из объекта record
+    if request.method == 'POST':
+        form = Record_form(formdata=request.form, obj=record)
+        # метод populate_obj заменяет новыми данными поля формы
+        form.populate_obj(record)
+        # комит для б.д. чтобы сохранить изменения
+        data_base.session.commit()
+        return redirect( url_for('records.record_detail', slug=record.slug) )
+
+    form = Record_form(obj=record)
+    return render_template('records/edit_record.html', record=record, form=form)
 
 
 # поиск по слагу в б.д. <...> - это переменная динамической ссылки
