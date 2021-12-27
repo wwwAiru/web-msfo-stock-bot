@@ -63,7 +63,11 @@
     Условие: если метод has_prev объекта pages - пуст, тогда проявить class="page-item disabled"  -->
     <li {% if not pages.has_prev %} class="page-item disabled" {% endif %}>
         <!-- ссылка адресует на страницу из метода prev_num(он динамический) -->
+        {% if search %}
+      <a class="page-link" href="./?search={{ search }}&page={{ pages.prev_num }}" aria-label="Previous">
+        {% else %}
       <a class="page-link" href="./?page={{ pages.prev_num }}" aria-label="Previous">
+        {% endif %}
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
@@ -75,16 +79,24 @@
       {% for page in pages.iter_pages() %}
 
       <!-- Проверка является ли page текущей страницей, если да, то проявить class="page-item active" -->
-    <li {% if page == pages.page %} class="page-item active" {% endif %}>
-
+        <li {% if page == pages.page %} class="page-item active" {% endif %}>
        <!-- в двойных фигурных скобках просто переменная номера страницы -->
+        {% if search %}
+        <a class="page-link" href="./?search={{ search }}&page={{ page }}">{{ page }}</a></li>
+        {% else %}
         <a class="page-link" href="./?page={{ page }}">{{ page }}</a></li>
+        {% endif %}
+
       {% endfor %}
 
       <!-- Проработка кнопки "следующая страница".
       Делается по аналогии кнопки "предидущая страница" только зеркально  -->
     <li {% if pages.has_next %} class="page-item" {% else %} class="page-item disabled" {% endif %}>
+        {% if search %}
+      <a class="page-link" href="./?search={{ search }}&page={{ pages.next_num }}" aria-label="Next">
+        {% else %}
       <a class="page-link" href="./?page={{ pages.next_num }}" aria-label="Next">
+        {% endif %}
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

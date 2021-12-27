@@ -44,7 +44,8 @@ def index():
     # Условие: если переменная search содержит что - либо, тогда у класса Records - модели запросов в б.д.
     # запрашиваем данные по сравниванию пользовательского запроса с именами компаний или содержанию краткого отчёта
     if search:
-        records = Records.query.filter(Records.company_name.contains(search) | Records.short_info.contains(search))
+        records = Records.query.filter(Records.company_name.contains(search) |
+                                       Records.short_info.contains(search)).order_by(Records.updated.desc())
     # иначе рендерится страница со всеми записями
     else:
         records = Records.query.order_by(Records.updated.desc())
@@ -54,7 +55,7 @@ def index():
     # 2- количество записей из б.д. (сколько записей будет на каждой странице, установил пока что 5)
     # 3- error_out(можно не указывать явно) - установлен по умолчанию в True, сигнализирует об ошибках
     pages = records.paginate(page=page, per_page=5)
-    return render_template('records/index.html', form=form, pages=pages)
+    return render_template('records/index.html', form=form, pages=pages, search=search)
 
 # роут для формы редактирования записи
 @records.route('/<slug>/edit/', methods=['POST', 'GET'])
