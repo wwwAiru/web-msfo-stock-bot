@@ -1,6 +1,7 @@
 from app import data_base
 from datetime import datetime
 import re
+from flask_security import UserMixin, RoleMixin
 
 
 # функция слагификации
@@ -41,4 +42,9 @@ class Records(data_base.Model):
 
 
 
-
+# Пользователи и модели
+class User(data_base.Model, UserMixin):
+    id = data_base.Column(data_base.Integer, primary_key=True)
+    email = data_base.Column(data_base.String(100), unique=True)
+    password = data_base.Column(data_base.String(255))
+    active = data_base.Column(data_base.Boolean())
