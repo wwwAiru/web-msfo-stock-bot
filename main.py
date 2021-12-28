@@ -1,12 +1,12 @@
 from app import app
 from app import data_base
-from records.content_blueprint import records
+from msfo_records.content_blueprint import msfo_records
 import view
 
 
 
 # регистрация блюпринта арг: экземпляр класса, путь до блюпринта
-app.register_blueprint(records, url_prefix='/records')
+app.register_blueprint(msfo_records, url_prefix='/msfo_records')
 
 if __name__ == '__main__':
     app.run()

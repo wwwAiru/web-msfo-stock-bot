@@ -5,3 +5,4 @@ class Configuration(object):
     #Отключим чтобы не влиял на производительность
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://ujkbzy:jVr8gf3BkBDb2k2I@localhost/bot_db'
+    SECRET_KEY = 'Hdf72Lkfj872ZWq83Lru32imn'

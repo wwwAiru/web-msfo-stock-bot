@@ -3,7 +3,7 @@
 
     {% block forms %}
     <!-- циклом выводятся поля формы из бэка, в скобках можно каждому полю присвоить класс из CSS стилей-->
-    <form action="{{ url_for('records.index')}}" method="POST">
+    <form action="{{ url_for('msfo_records.index')}}" method="POST">
       {% for field in form %}
       <div class="form-group col-4">
           {{ field.label(class="control-label") }}
@@ -39,11 +39,11 @@
         <!-- циклом выводятся записи из б.д. постранично, записи берутся из объекта pages-->
         {% for record in pages.items %}
             <!-- на название компании навешивается ссылка, которая переадресует на страницу record_detail.html,
-            для этого в функцию record_detail из вью records.
+            для этого в функцию record_detail из вью msfo_records.
             и передаёт в функцию аргумент slug которому присваивается значение поля slug(то что в б.д.) объекта record,
             перейдя по ссылке мы попадём на страницу детальной информации о компании -->
             <tr>
-                <td><a href="{{ url_for('records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a></td>
+                <td><a href="{{ url_for('msfo_records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a></td>
                 <td> {{ record.short_info }}</td>
                 <td> <a href="{{ record.long_info }}">{{ record.long_info }}</a></td>
 
