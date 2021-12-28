@@ -76,7 +76,7 @@
            этот метод может принимать 4 аргумента, у них есть дефолтные значения,
            они проявятся если страниц будет слишком много, например появятся многоточия и разделения по количеству страниц
            до и после многоточия, задав значения аргументов можно регулировать как удобно. -->
-           {% for page in pages.iter_pages(left_edge=2,left_current=2,right_current=5,right_edge=2) %}
+           {% for page in pages.iter_pages(left_edge=1,right_edge=1,left_current=1, right_current=2) %}
                {% if page %}
 
                     <!-- Проверка является ли page текущей страницей, если да, то проявить class="page-item active" -->
