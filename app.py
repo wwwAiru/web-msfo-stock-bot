@@ -20,7 +20,7 @@ migrate = Migrate(app, data_base)
 # Админка
 from models import *
 # создан экземпляр класса Admin
-admin = Admin(app)
+admin = Admin(app, template_mode='bootstrap4')
 # таким образом можно добавить управление любыми данными
 admin.add_view(ModelView(Records, data_base.session, name='Таблица МСФО'))
 
