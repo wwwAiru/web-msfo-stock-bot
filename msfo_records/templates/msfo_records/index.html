@@ -43,13 +43,13 @@
             и передаёт в функцию аргумент slug которому присваивается значение поля slug(то что в б.д.) объекта record,
             перейдя по ссылке мы попадём на страницу детальной информации о компании -->
             <tr>
-                <td><a href="{{ url_for('msfo_records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a></td>
-                <td> {{ record.short_info }}</td>
-                <td> <a href="{{ record.long_info }}">{{ record.long_info }}</a></td>
+                <td class="col-2"><a href="{{ url_for('msfo_records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a></td>
+                <td class="col-8"><textarea class="col-10"> {{ record.short_info }}</textarea></td>
+                <td class="col-3"> <a href="{{ record.long_info }}">{{ record.long_info }}</a></td>
 
                 <!--тут небольшое форматирование вывода даты, мне удобно в формате: день.месяц.год
                     можно настроить в любом удобном формате-->
-                <td> {{ record.updated.strftime("%H:%M:%S %d.%m.%Y") }}</td>
+                <td class="col-1"> {{ record.updated.strftime("%H:%M:%S %d.%m.%Y") }}</td>
             </tr>
                 {% endfor %}
             </tbody>
