@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 # адмминка
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask_security import SQLAlchemyUserDatastore
+from flask_security import SQLAlchemyUserDatastore, Security
 from flask_babelex import Babel
 
 
@@ -30,3 +30,9 @@ def get_locale():
         # Put your logic here. Application can store locale in
         # user profile, cookie, session, etc.
         return 'ru'
+
+# flask_security
+# созд. экземпляр класса SQLAlchemyUserDatastore, аргументы: б.д., классы User и Role из models.py
+user_datastore = SQLAlchemyUserDatastore(data_base, User, Role)
+# созд. экземпляр класса Security с аргументами: приложение, объект user_datastore
+security = Security(app, user_datastore)
