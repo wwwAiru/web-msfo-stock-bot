@@ -60,6 +60,10 @@ class User(data_base.Model, UserMixin):
     # св-во таблицы
     roles = data_base.relationship('Role', secondary=roles_users, backref=data_base.backref('users', lazy='dynamic'))
 
+    # отбражение юзера в ролях админки
+    def __repr__(self):
+        return f'{self.full_name} ({self.email})'
+
 class Role(data_base.Model, RoleMixin):
     id = data_base.Column(data_base.Integer(), primary_key=True)
     name = data_base.Column(data_base.String(100), unique=True)
