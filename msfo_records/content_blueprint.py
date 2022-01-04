@@ -3,6 +3,7 @@ from models import Records
 from .forms import Record_form
 from app import data_base
 from datetime import datetime
+from flask_security import login_required
 
 
 # блюпринт кусок изолированной функциональности
@@ -59,6 +60,7 @@ def index():
 
 # роут для формы редактирования записи
 @msfo_records.route('/<slug>/edit/', methods=['POST', 'GET'])
+@login_required
 def edit_record(slug):
     # получаем данные конкретной компании по слагу
     record = Records.query.filter(Records.slug == slug).first()
