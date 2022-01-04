@@ -63,31 +63,21 @@
             Условие: если метод has_prev объекта pages - пуст, тогда проявить class="page-item disabled"  -->
             <li {% if not pages.has_prev %} class="page-item disabled" {% endif %}>
                 <!-- ссылка адресует на страницу из метода prev_num(он динамический) -->
-                {% if search %}
-                    <a class="page-link" href="./?search={{ search }}&page={{ pages.prev_num }}" aria-label="Previous">
-                {% else %}
-                    <a class="page-link" href="./?page={{ pages.prev_num }}" aria-label="Previous">
-                {% endif %}
-                    <span aria-hidden="true">&laquo;</span>
-                    </a>
+                <a class="page-link" href="{{ url_for('msfo_records.index',search=search, page=pages.prev_num) }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                </a>
             </li>
 
            <!-- тут циклом выводятся номера страниц из объекта pages методом-итератором iter_pages()
            этот метод может принимать 4 аргумента, у них есть дефолтные значения,
            они проявятся если страниц будет слишком много, например появятся многоточия и разделения по количеству страниц
            до и после многоточия, задав значения аргументов можно регулировать как удобно. -->
+
            {% for page in pages.iter_pages(left_edge=1,right_edge=1,left_current=1, right_current=2) %}
                {% if page %}
-
                     <!-- Проверка является ли page текущей страницей, если да, то проявить class="page-item active" -->
                     <li {% if page == pages.page %} class="page-item active" {% endif %}>
-
-                   {% if search %}
-                       <a class="page-link" href="./?search={{ search }}&page={{ page }}">{{ page }}</a></li>
-                   {% else %}
-                       <a class="page-link" href="./?page={{ page }}">{{ page }}</a></li>
-                   {% endif %}
-
+                    <a class="page-link" href="{{ url_for('msfo_records.index', search=search, page=page) }}">{{ page }}</a></li>
                {% else %}
                    <h1>...</h1>
                {% endif %}
@@ -95,14 +85,11 @@
 
           <!-- Проработка кнопки "следующая страница".
             Делается по аналогии кнопки "предидущая страница" только зеркально  -->
+
            <li {% if pages.has_next %} class="page-item" {% else %} class="page-item disabled" {% endif %}>
-               {% if search %}
-                    <a class="page-link" href="./?search={{ search }}&page={{ pages.next_num }}" aria-label="Next">
-               {% else %}
-                    <a class="page-link" href="./?page={{ pages.next_num }}" aria-label="Next">
-               {% endif %}
-                    <span aria-hidden="true">&raquo;</span>
-                    </a>
+               <a class="page-link" href="{{ url_for('msfo_records.index',search=search, page=pages.next_num) }}" aria-label="Next">
+               <span aria-hidden="true">&raquo;</span>
+               </a>
            </li>
           </ul>
         </nav>
