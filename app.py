@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 # адмминка
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-
+from flask_security import SQLAlchemyUserDatastore
 from flask_babelex import Babel
 
 
