@@ -62,5 +62,5 @@ class User(data_base.Model, UserMixin):
 
 class Role(data_base.Model, RoleMixin):
     id = data_base.Column(data_base.Integer(), primary_key=True)
-    position_name = data_base.Column(data_base.String(100), unique=True)
+    name = data_base.Column(data_base.String(100), unique=True)
     description = data_base.Column(data_base.String(255))

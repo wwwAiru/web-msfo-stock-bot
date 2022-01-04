@@ -27,9 +27,9 @@ admin.add_view(ModelView(Records, data_base.session, name='Таблица МСФ
 # локализация админки
 @babel.localeselector
 def get_locale():
-        # Put your logic here. Application can store locale in
-        # user profile, cookie, session, etc.
-        return 'ru'
+    # Put your logic here. Application can store locale in
+    # user profile, cookie, session, etc.
+    return 'ru'
 
 # flask_security
 # созд. экземпляр класса SQLAlchemyUserDatastore, аргументы: б.д., классы User и Role из models.py
