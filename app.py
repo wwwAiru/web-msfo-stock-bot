@@ -23,6 +23,8 @@ from models import *
 admin = Admin(app, template_mode='bootstrap4')
 # таким образом можно добавить управление любыми данными
 admin.add_view(ModelView(Records, data_base.session, name='Таблица МСФО'))
+admin.add_view(ModelView(User, data_base.session, name='Таблица пользователей'))
+admin.add_view(ModelView(Role, data_base.session, name='Роли'))
 
 # локализация админки
 @babel.localeselector
