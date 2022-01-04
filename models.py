@@ -42,9 +42,25 @@ class Records(data_base.Model):
 
 
 
-# Пользователи и модели
+# Пользователи и модели ролей
+
+# связи таблиц
+roles_users = data_base.Table('roles_users',
+        data_base.Column('user_id', data_base.Integer(), data_base.ForeignKey('user.id')),
+        data_base.Column('role_id', data_base.Integer(), data_base.ForeignKey('role.id'))
+    )
+
 class User(data_base.Model, UserMixin):
-    id = data_base.Column(data_base.Integer, primary_key=True)
+    id = data_base.Column(data_base.Integer(), primary_key=True)
+    full_name = data_base.Column(data_base.String(255))
+    gender = data_base.Column(data_base.String(100))
     email = data_base.Column(data_base.String(100), unique=True)
     password = data_base.Column(data_base.String(255))
     active = data_base.Column(data_base.Boolean())
+    # св-во таблицы
+    roles = data_base.relationship('Role', secondary=roles_users, backref=data_base.backref('users', lazy='dynamic'))
+
+class Role(data_base.Model, RoleMixin):
+    id = data_base.Column(data_base.Integer(), primary_key=True)
+    position_name = data_base.Column(data_base.String(100), unique=True)
+    description = data_base.Column(data_base.String(255))
