@@ -1,30 +1,39 @@
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
 
-    {% block forms %}
-    <!-- циклом выводятся поля формы из бэка, в скобках можно каждому полю присвоить класс из CSS стилей-->
+
+
+
+{% block title %}
+Таблица отчётов.
+{% endblock %}
+
+{% block content_title %}
+Таблица отчётов МСФО/РСБУ.
+{% endblock %}
+
+
+{% block table_content %}
+
+<!-- объект current_user в шаблонизаторе по умолчанию, метод has_role() в классе UserMixin (models.py) -->
+
+{% if current_user.has_role('Администратор') %}
+
+    <!-- циклом выводятся поля формы из бэка, в скобках можно каждому полю присвоить класс из CSS стилей -->
+
     <form action="{{ url_for('msfo_records.index')}}" method="POST">
-      {% for field in form %}
-      <div class="form-group col-4">
-          {{ field.label(class="control-label") }}
-          {{ field(class="form-control") }}
-      </div>
-      {% endfor %}
+        {% for field in form %}
+        <div class="form-group col-4">
+            {{ field.label(class="control-label") }}
+            {{ field(class="form-control") }}
+        </div>
+        {% endfor %}
       <button type="submit" class="btn btn-primary">Добавить</button>
-  </form>
-  {% endblock %}
+    </form>
+
+{% endif %}
 
 
-  {% block title %}
-  Таблица отчётов.
-  {% endblock %}
-
-  {% block content_title %}
-  Таблица отчётов МСФО/РСБУ.
-  {% endblock %}
-
-
-  {% block table_content %}
   <table class="table">
     <thead>
         <tr>
@@ -36,8 +45,11 @@
     </thead>
 
     <tbody>
+
         <!-- циклом выводятся записи из б.д. постранично, записи берутся из объекта pages-->
+
         {% for record in pages.items %}
+
             <!-- на название компании навешивается ссылка, которая переадресует на страницу record_detail.html,
             для этого в функцию record_detail из вью msfo_records.
             и передаёт в функцию аргумент slug которому присваивается значение поля slug(то что в б.д.) объекта record,
@@ -51,9 +63,10 @@
                     можно настроить в любом удобном формате-->
                 <td class="col-1"> {{ record.updated.strftime("%H:%M:%S %d.%m.%Y") }}</td>
             </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+        {% endfor %}
+    </tbody>
+  </table>
 
 
         <!-- Пагинация -->
@@ -84,7 +97,7 @@
            {% endfor %}
 
           <!-- Проработка кнопки "следующая страница".
-            Делается по аналогии кнопки "предидущая страница" только зеркально  -->
+            Делается по аналогии кнопки "предыдущая страница" только зеркально  -->
 
            <li {% if pages.has_next %} class="page-item" {% else %} class="page-item disabled" {% endif %}>
                <a class="page-link" href="{{ url_for('msfo_records.index',search=search, page=pages.next_num) }}" aria-label="Next">
@@ -93,5 +106,4 @@
            </li>
           </ul>
         </nav>
-
-        {% endblock %}
+{% endblock %}
