@@ -1,12 +1,12 @@
-from flask import Flask
+from flask import Flask, redirect, url_for, request
 from config import Configuration
 from flask_sqlalchemy import SQLAlchemy
 # для миграций б.д.
 from flask_migrate import Migrate
 # адмминка
-from flask_admin import Admin
+from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
-from flask_security import SQLAlchemyUserDatastore, Security
+from flask_security import SQLAlchemyUserDatastore, Security, current_user
 from flask_babelex import Babel
 
 
@@ -19,12 +19,36 @@ migrate = Migrate(app, data_base)
 
 # Админка
 from models import *
+
+# Для того чтобы ограничить отображение админки созд. два класса от родительских ModelView и AdminIndexView
+# класс AdminView ограничивает вывод функционала админки
+class AdminView(ModelView):
+    def is_accessible(self):
+        return current_user.has_role('admin')
+
+    def inaccessible_callback(self, name, **kwargs):
+        # параметр next перенаправляет на страницу куда мы хотели направиться будучи неавторизованным
+        return redirect( url_for('security.login', next=request.url) )
+
+# класс AdminPanel не даёт видеть админ панель будучи неавторизованным
+class AdminPanel(AdminIndexView):
+    def is_accessible(self):
+        return current_user.has_role('admin')
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect( url_for('security.login', next=request.url) )
+
+
+
 # создан экземпляр класса Admin
-admin = Admin(app, template_mode='bootstrap4')
-# таким образом можно добавить управление любыми данными
-admin.add_view(ModelView(Records, data_base.session, name='Таблица МСФО'))
-admin.add_view(ModelView(User, data_base.session, name='Таблица пользователей'))
-admin.add_view(ModelView(Role, data_base.session, name='Роли'))
+admin = Admin(app, '@Msfo_stock_bot' , template_mode='bootstrap4', url='/', index_view=AdminPanel(name='Панель администратора'))
+# ModelView или расширеный от него, в нашем случае, AdminView - подхватывает классы б.д. из models.py
+# и реализуем модель 'C.R.U.D.' для управлением любыми данными из б.д.
+# параметром name можно назначить название кнопок на панели администратора.
+admin.add_view(AdminView(Records, data_base.session, name='Таблица МСФО/РСБУ'))
+admin.add_view(AdminView(User, data_base.session, name='Таблица пользователей'))
+admin.add_view(AdminView(Role, data_base.session, name='Роли'))
+
 
 # локализация админки
 @babel.localeselector
