@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 
 
-
-
-
 {% block title %}
 Таблица отчётов.
 {% endblock %}
@@ -19,91 +16,97 @@
 
 {% if current_user.has_role('admin') %}
 
-    <!-- циклом выводятся поля формы из бэка, в скобках можно каждому полю присвоить класс из CSS стилей -->
+<!-- циклом выводятся поля формы из бэка, в скобках можно каждому полю присвоить класс из CSS стилей -->
 
-    <form action="{{ url_for('msfo_records.index')}}" method="POST">
-        {% for field in form %}
-        <div class="form-group col-4">
-            {{ field.label(class="control-label") }}
-            {{ field(class="form-control") }}
-        </div>
-        {% endfor %}
-      <button type="submit" class="btn btn-primary">Добавить</button>
-    </form>
+<form action="{{ url_for('msfo_records.index')}}" method="POST">
+    {% for field in form %}
+    <div class="form-group col-4">
+        {{ field.label(class="control-label") }}
+        {{ field(class="form-control") }}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Добавить</button>
+</form>
 
 {% endif %}
 
 
-  <table class="table">
+<table class="table">
     <thead>
-        <tr>
-            <th scope="col">Компания</th>
-            <th scope="col">Краткий отчёт</th>
-            <th scope="col">Ссылка на полный отчёт</th>
-            <th scope="col">Дата обновления</th>
-        </tr>
+    <tr>
+        <th scope="col">Компания</th>
+        <th scope="col">Краткий отчёт</th>
+        <th scope="col">Ссылка на полный отчёт</th>
+        <th scope="col">Дата обновления</th>
+    </tr>
     </thead>
 
     <tbody>
 
-        <!-- циклом выводятся записи из б.д. постранично, записи берутся из объекта pages-->
+    <!-- циклом выводятся записи из б.д. постранично, записи берутся из объекта pages-->
 
-        {% for record in pages.items %}
+    {% for record in pages.items %}
 
-            <!-- на название компании навешивается ссылка, которая переадресует на страницу record_detail.html,
-            для этого в функцию record_detail из вью msfo_records.
-            и передаёт в функцию аргумент slug которому присваивается значение поля slug(то что в б.д.) объекта record,
-            перейдя по ссылке мы попадём на страницу детальной информации о компании -->
-            <tr>
-                <td class="col-2"><a href="{{ url_for('msfo_records.record_detail', slug=record.slug) }}">{{ record.company_name }}</a></td>
-                <td class="col-8"><textarea class="col-10"> {{ record.short_info }}</textarea></td>
-                <td class="col-3"> <a href="{{ record.long_info }}">{{ record.long_info }}</a></td>
+    <!-- на название компании навешивается ссылка, которая переадресует на страницу record_detail.html,
+    для этого в функцию record_detail из вью msfo_records.
+    и передаёт в функцию аргумент slug которому присваивается значение поля slug(то что в б.д.) объекта record,
+    перейдя по ссылке мы попадём на страницу детальной информации о компании -->
+    <tr>
+        <td class="col-2"><a href="{{ url_for('msfo_records.record_detail', slug=record.slug) }}">{{ record.company_name
+            }}</a></td>
+        <td class="col-8"><textarea class="col-10"> {{ record.short_info }}</textarea></td>
+        <td class="col-3"><a href="{{ record.long_info }}">{{ record.long_info }}</a></td>
 
-                <!--тут небольшое форматирование вывода даты, мне удобно в формате: день.месяц.год
-                    можно настроить в любом удобном формате-->
-                <td class="col-1"> {{ record.updated.strftime("%H:%M:%S %d.%m.%Y") }}</td>
-            </tr>
+        <!--тут небольшое форматирование вывода даты, мне удобно в формате: день.месяц.год
+            можно настроить в любом удобном формате-->
+        <td class="col-1"> {{ record.updated.strftime("%H:%M:%S %d.%m.%Y") }}</td>
+    </tr>
 
-        {% endfor %}
+    {% endfor %}
     </tbody>
-  </table>
+</table>
 
 
-        <!-- Пагинация -->
-        <nav aria-label="Page navigation example">
-          <ul class="pagination pagination-lg">
-            <!-- Проработка кнопки "предидущая страница".
-            Условие: если метод has_prev объекта pages - пуст, тогда проявить class="page-item disabled"  -->
-            <li {% if not pages.has_prev %} class="page-item disabled" {% endif %}>
-                <!-- ссылка адресует на страницу из метода prev_num(он динамический) -->
-                <a class="page-link" href="{{ url_for('msfo_records.index',search=search, page=pages.prev_num) }}" aria-label="Previous">
+<!-- Пагинация -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-lg">
+
+        <!-- Проработка кнопки "предидущая страница".
+        Условие: если метод has_prev объекта pages - пуст, тогда проявить class="page-item disabled"  -->
+        <li {% if not pages.has_prev %} class="page-item disabled" {% endif %}>
+            <!-- ссылка адресует на страницу из метода prev_num(он динамический) -->
+            <a class="page-link" href="{{ url_for('msfo_records.index',search=search, page=pages.prev_num) }}"
+               aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
+            </a>
+        </li>
 
-           <!-- тут циклом выводятся номера страниц из объекта pages методом-итератором iter_pages()
-           этот метод может принимать 4 аргумента, у них есть дефолтные значения,
-           они проявятся если страниц будет слишком много, например появятся многоточия и разделения по количеству страниц
-           до и после многоточия, задав значения аргументов можно регулировать как удобно. -->
+        <!-- тут циклом выводятся номера страниц из объекта pages методом-итератором iter_pages()
+        этот метод может принимать 4 аргумента, у них есть дефолтные значения,
+        они проявятся если страниц будет слишком много, например появятся многоточия и разделения по количеству страниц
+        до и после многоточия, задав значения аргументов можно регулировать как удобно. -->
 
-           {% for page in pages.iter_pages(left_edge=1,right_edge=1,left_current=1, right_current=2) %}
-               {% if page %}
-                    <!-- Проверка является ли page текущей страницей, если да, то проявить class="page-item active" -->
-                    <li {% if page == pages.page %} class="page-item active" {% endif %}>
-                    <a class="page-link" href="{{ url_for('msfo_records.index', search=search, page=page) }}">{{ page }}</a></li>
-               {% else %}
-                   <h1>...</h1>
-               {% endif %}
-           {% endfor %}
+        {% for page in pages.iter_pages(left_edge=1,right_edge=1,left_current=1, right_current=2) %}
+        {% if page %}
+        <!-- Проверка является ли page текущей страницей, если да, то проявить class="page-item active" -->
+        <li {% if page== pages.page %} class="page-item active" {% endif %}>
+            <a class="page-link" href="{{ url_for('msfo_records.index', search=search, page=page) }}">{{ page }}</a>
+        </li>
+        {% else %}
+        <h1>...</h1>
+        {% endif %}
+        {% endfor %}
 
-          <!-- Проработка кнопки "следующая страница".
-            Делается по аналогии кнопки "предыдущая страница" только зеркально  -->
+        <!-- Проработка кнопки "следующая страница".
+          Делается по аналогии кнопки "предыдущая страница" только зеркально  -->
 
-           <li {% if pages.has_next %} class="page-item" {% else %} class="page-item disabled" {% endif %}>
-               <a class="page-link" href="{{ url_for('msfo_records.index',search=search, page=pages.next_num) }}" aria-label="Next">
-               <span aria-hidden="true">&raquo;</span>
-               </a>
-           </li>
-          </ul>
-        </nav>
+        <li {% if pages.has_next %} class="page-item" {% else %} class="page-item disabled" {% endif %}>
+            <a class="page-link" href="{{ url_for('msfo_records.index',search=search, page=pages.next_num) }}"
+               aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+
+    </ul>
+</nav>
 {% endblock %}
