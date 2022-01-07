@@ -25,7 +25,7 @@
         {{ field(class="form-control") }}
     </div>
     {% endfor %}
-    <button type="submit" class="btn btn-primary">Добавить</button>
+    <button type="submit" class="btn" style="background-color: #7fffd4">Добавить</button>
 </form>
 
 {% endif %}
@@ -73,7 +73,7 @@
 
         <!-- Проработка кнопки "предидущая страница".
         Условие: если метод has_prev объекта pages - пуст, тогда проявить class="page-item disabled"  -->
-        <li {% if not pages.has_prev %} class="page-item disabled" {% endif %}>
+        <li {% if not pages.has_prev %} class="page-item disabled"  {% endif %}>
             <!-- ссылка адресует на страницу из метода prev_num(он динамический) -->
             <a class="page-link" href="{{ url_for('msfo_records.index',search=search, page=pages.prev_num) }}"
                aria-label="Previous">
