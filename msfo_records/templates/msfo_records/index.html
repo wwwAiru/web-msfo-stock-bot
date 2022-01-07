@@ -25,7 +25,7 @@
         {{ field(class="form-control") }}
     </div>
     {% endfor %}
-    <button type="submit" class="btn" style="background-color: #7fffd4">Добавить</button>
+    <button type="submit" class="btn btn-outline-success" style="background-color: #7fffd4">Добавить</button>
 </form>
 
 {% endif %}
@@ -89,7 +89,7 @@
         {% for page in pages.iter_pages(left_edge=1,right_edge=1,left_current=1, right_current=2) %}
         {% if page %}
         <!-- Проверка является ли page текущей страницей, если да, то проявить class="page-item active" -->
-        <li {% if page== pages.page %} class="page-item active" {% endif %}>
+        <li {% if page == pages.page %} class="page-item active" {% endif %}>
             <a class="page-link" href="{{ url_for('msfo_records.index', search=search, page=page) }}">{{ page }}</a>
         </li>
         {% else %}
@@ -100,8 +100,8 @@
         <!-- Проработка кнопки "следующая страница".
           Делается по аналогии кнопки "предыдущая страница" только зеркально  -->
 
-        <li {% if pages.has_next %} class="page-item" {% else %} class="page-item disabled" {% endif %}>
-            <a class="page-link" href="{{ url_for('msfo_records.index',search=search, page=pages.next_num) }}"
+        <li {% if pages.has_next %} class="page-item"  {% else %} class="page-item disabled" {% endif %}>
+            <a class="page-link"  href="{{ url_for('msfo_records.index',search=search, page=pages.next_num) }}"
                aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>

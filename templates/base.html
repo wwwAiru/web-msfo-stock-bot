@@ -67,7 +67,7 @@
                 в бэк передаётся  пустая строка -->
                 <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search"
                        name="search" value="{{ request.args.get('search', '') }}">
-                <button class="btn btn-outline-success" type="submit">Найти</button>
+                <button class="btn btn-outline-success" style="background-color: #7fffd4" type="submit">Найти</button>
             </form>
 
         </div>
@@ -79,12 +79,11 @@
 <div class="container">
     {% block forms %}
     {% endblock %}
+    <div class="row">
         <h2 class="row col-md-5 offset-md-5">
             {% block content_title %}
             {% endblock %}
         </h2>
-
-    <div class="container col-md-5 offset-md-5">
         {% block content %}
         {% endblock %}
     </div>
