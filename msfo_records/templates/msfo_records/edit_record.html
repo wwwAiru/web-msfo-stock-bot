@@ -15,7 +15,7 @@
 
 
 
-{% block table_content %}
+{% block content %}
 <!-- параметр slug передаётся в функцию edit_record( slug ) -->
 <form action="{{ url_for('msfo_records.edit_record', slug=record.slug) }}" method="POST">
 
