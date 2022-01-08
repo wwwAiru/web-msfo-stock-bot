@@ -27,8 +27,10 @@ class AdminMixin:
     def is_accessible(self):
         return current_user.has_role('admin')
 
+
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('security.login', next=request.url))
+
 
 
 # дополнение класса ModelView чтобы slug генерировался в админке автоматически при создании новой записи в таблице
@@ -49,7 +51,9 @@ class AdminPanel(AdminMixin, AdminIndexView):
 # чтобы метод generate_slug не попал в те модели, где его нет изначально
 
 class RecordsAdminView(AdminMixin, BaseModelView):
-    pass
+    # так можно переопределить отображение форм в админ панели
+    form_columns = ['company_name', 'short_info', 'long_info']
+
 
 class UserAdminView(AdminMixin, ModelView):
     pass
