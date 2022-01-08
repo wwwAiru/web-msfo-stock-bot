@@ -21,23 +21,41 @@ from models import *
 
 
 # Для того чтобы ограничить отображение админки созд. два класса от родительских ModelView и AdminIndexView
-# класс AdminView ограничивает вывод функционала админки
-class AdminView(ModelView):
-    def is_accessible(self):
-        return current_user.has_role('admin')
+# класс AdminView ограничивает вывод функционала админки без доступа
 
-    def inaccessible_callback(self, name, **kwargs):
-        # параметр next перенаправляет на страницу куда мы хотели направиться будучи неавторизованным
-        return redirect(url_for('security.login', next=request.url))
-
-
-# класс AdminPanel не даёт видеть админ панель будучи неавторизованным
-class AdminPanel(AdminIndexView):
+class AdminMixin:
     def is_accessible(self):
         return current_user.has_role('admin')
 
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('security.login', next=request.url))
+
+
+# дополнение класса ModelView чтобы slug генерировался в админке автоматически при создании новой записи в таблице
+class BaseModelView(ModelView):
+    def on_model_change(self, form, model, is_created):
+        model.generate_slug()
+        return super(BaseModelView, self).on_model_change(form, model, is_created)
+
+# класс AdminView ограничивает модели представления б.д. в админке
+class AdminView(AdminMixin, ModelView):
+    pass
+
+# класс AdminPanel ограничивает админ панель будучи неавторизованным
+class AdminPanel(AdminMixin, AdminIndexView):
+    pass
+
+# создал ещё наследников вьюх RecordsAdminView, UserAdminView, RoleAdminView
+# чтобы метод generate_slug не попал в те модели, где его нет изначально
+
+class RecordsAdminView(AdminMixin, BaseModelView):
+    pass
+
+class UserAdminView(AdminMixin, ModelView):
+    pass
+
+class RoleAdminView(AdminMixin, ModelView):
+    pass
 
 
 # создан экземпляр класса Admin
@@ -46,9 +64,9 @@ admin = Admin(app, '@Msfo_stock_bot', template_mode='bootstrap4', url='/',
 # ModelView или расширеный от него, в нашем случае, AdminView - подхватывает классы б.д. из models.py
 # и реализуем модель 'C.R.U.D.' для управлением любыми данными из б.д.
 # параметром name можно назначить название кнопок на панели администратора.
-admin.add_view(AdminView(Records, data_base.session, name='Таблица МСФО/РСБУ'))
-admin.add_view(AdminView(User, data_base.session, name='Пользователи'))
-admin.add_view(AdminView(Role, data_base.session, name='Роли'))
+admin.add_view(RecordsAdminView(Records, data_base.session, name='Таблица МСФО/РСБУ'))
+admin.add_view(UserAdminView(User, data_base.session, name='Пользователи'))
+admin.add_view(RoleAdminView(Role, data_base.session, name='Роли'))
 
 
 # локализация админки
