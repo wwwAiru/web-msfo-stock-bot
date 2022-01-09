@@ -54,8 +54,10 @@ class User(data_base.Model, UserMixin):
     id = data_base.Column(data_base.Integer(), primary_key=True)
     full_name = data_base.Column(data_base.String(255))
     gender = data_base.Column(data_base.String(100))
+    birthdate = data_base.Column(data_base.Date())
     email = data_base.Column(data_base.String(100), unique=True)
     password = data_base.Column(data_base.String(255))
+    updated = data_base.Column(data_base.DateTime, default=datetime.now())
     active = data_base.Column(data_base.Boolean())
     # св-во таблицы
     roles = data_base.relationship('Role', secondary=roles_users, backref=data_base.backref('users', lazy='dynamic'))
