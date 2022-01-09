@@ -1,7 +1,54 @@
 {% extends 'base.html' %}
 
-{% block registration %}
+
+{% block title %}
+Регистрация
+{% endblock %} | @Msfo_stock_bot
+
+{% block content_title %}
+Регистрация
 {% endblock %}
+
+
+{% block content %}
+
+    {% if current_user.is_anonymous %}
+
+    <div class="row col-md-4 offset-md-4">
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                      {{ message }}
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('registration') }}" method="POST">
+
+            {% for field in forms %}
+            <div class="form-group">
+                {{ field.label(class="control-label") }}
+                {{ field(class="form-control") }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-outline-success" style="background-color: #7fffd4">Регистрация</button>
+
+        </form>
+    </div>
+
+    {% else %}
+        <div class="row col-md offset-md-5"">
+            Вы уже зарегистрированы.
+        </div>
+    {% endif %}
+
+{% endblock %}
+
 
 
 
