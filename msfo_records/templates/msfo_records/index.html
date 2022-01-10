@@ -71,7 +71,7 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination pagination-lg">
 
-        <!-- Проработка кнопки "предидущая страница".
+        <!-- Проработка кнопки "предыдущая страница".
         Условие: если метод has_prev объекта pages - пуст, тогда проявить class="page-item disabled"  -->
         <li {% if not pages.has_prev %} class="page-item disabled"  {% endif %}>
             <!-- ссылка адресует на страницу из метода prev_num(он динамический) -->
@@ -86,14 +86,14 @@
         они проявятся если страниц будет слишком много, например появятся многоточия и разделения по количеству страниц
         до и после многоточия, задав значения аргументов можно регулировать как удобно. -->
 
-        {% for page in pages.iter_pages(left_edge=1,right_edge=1,left_current=1, right_current=2) %}
+        {% for page in pages.iter_pages(left_edge=2,right_edge=2,left_current=1, right_current=2) %}
         {% if page %}
         <!-- Проверка является ли page текущей страницей, если да, то проявить class="page-item active" -->
         <li {% if page == pages.page %} class="page-item active" {% endif %}>
             <a class="page-link" href="{{ url_for('msfo_records.index', search=search, page=page) }}">{{ page }}</a>
         </li>
         {% else %}
-        <h1>...</h1>
+        <li class="page-item"><a class="page-link">...</a></li>
         {% endif %}
         {% endfor %}
 
