@@ -23,7 +23,8 @@
         {{ login_user_form.hidden_tag() }}
         {{ render_field_with_errors(login_user_form.email, class="form-control col-4") }}
         {{ render_field_with_errors(login_user_form.password, class="form-control col-4") }}
-        {{ render_field_with_errors(login_user_form.remember) }}
+        <label>Показать пароль<input type="checkbox" class="password-checkbox"></label>
+        <p>{{ render_field_with_errors(login_user_form.remember) }}</p>
         {{ render_field(login_user_form.next) }}
         {{ render_field(login_user_form.submit, class="btn", style="background-color: #7fffd4") }}
     </form>
@@ -31,4 +32,16 @@
     {% include "security/_menu.html" %}
 </div>
 
+
+<!-- JS и чекбокс показать пароль -->
+<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+<script>
+$('body').on('click', '.password-checkbox', function(){
+	if ($(this).is(':checked')){
+		$('#password').attr('type', 'text');
+	} else {
+		$('#password').attr('type', 'password');
+	}
+});
+</script>
 {% endblock %}
