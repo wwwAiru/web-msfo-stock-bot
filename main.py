@@ -1,7 +1,5 @@
 from app import app
-from app import data_base
 from msfo_records.content_blueprint import msfo_records
-import view
 
 
 
