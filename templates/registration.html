@@ -63,7 +63,7 @@
 
 
 <!-- JS и чекбокс показать пароль -->
-<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.6.0.min.js') }}"></script>
 <script>
 $('body').on('click', '.password-checkbox', function(){
 	if ($(this).is(':checked')){
