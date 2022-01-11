@@ -14,7 +14,7 @@
 
     {% if current_user.is_anonymous %}
 
-    <div class="row col-md-4 offset-md-4">
+    <div class="container">
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -29,15 +29,29 @@
         {% endwith %}
 
         <form action="{{ url_for('registration') }}" method="POST">
-
-            {% for field in forms %}
-            <div class="form-group">
+            {{ form.hidden_tag() }}
+            {% for field in form if field.name not in ['csrf_token'] %}
+            <div class="form-group col-4">
                 {{ field.label(class="control-label") }}
-                {{ field(class="form-control") }}
+                {% if field.errors %}
+                    <p>{{ field(class="form-control is-invalid") }}</p>
+                    <p>
+                        {% for err in field.errors %}
+                            {{ err }}
+                        {% endfor %}
+                    </p>
+                {% elif field == form.confirm_pass %}
+                    {{ field(class="form-control") }}
+                <label><input type="checkbox" class="password-checkbox"> Показать пароль</label>
+
+                {% else %}
+                    <p>{{ field(class="form-control") }}</p>
+                {% endif %}
             </div>
             {% endfor %}
-            <button type="submit" class="btn btn-outline-success" style="background-color: #7fffd4">Регистрация</button>
-
+            <p>
+                <button type="submit" class="btn btn-outline-success" style="background-color: #7fffd4">Регистрация</button>
+            </p>
         </form>
     </div>
 
@@ -47,9 +61,18 @@
         </div>
     {% endif %}
 
+
+<!-- JS и чекбокс показать пароль -->
+<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+<script>
+$('body').on('click', '.password-checkbox', function(){
+	if ($(this).is(':checked')){
+		$('#password').attr('type', 'text');
+		$('#confirm_pass').attr('type', 'text');
+	} else {
+		$('#password').attr('type', 'password');
+		$('#confirm_pass').attr('type', 'password');
+	}
+});
+</script>
 {% endblock %}
-
-
-
-
-
