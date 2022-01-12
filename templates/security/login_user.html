@@ -23,8 +23,12 @@
         {{ login_user_form.hidden_tag() }}
         {{ render_field_with_errors(login_user_form.email, class="form-control col-4") }}
         {{ render_field_with_errors(login_user_form.password, class="form-control col-4") }}
-        <label>Показать пароль<input type="checkbox" class="password-checkbox"></label>
-        <p>{{ render_field_with_errors(login_user_form.remember) }}</p>
+        <div class="form-check form-check-inline">
+        <label>Показать пароль<input class="form-check-input" id="show_pass" type="checkbox"></label>
+        </div>
+        <div class="form-check form-check-inline">
+            {{ render_field_with_errors(login_user_form.remember, class="form-check-input") }}
+        </div>
         {{ render_field(login_user_form.next) }}
         {{ render_field(login_user_form.submit, class="btn", style="background-color: #7fffd4") }}
     </form>
@@ -36,7 +40,7 @@
 <!-- JS и чекбокс показать пароль -->
 <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.6.0.min.js') }}"></script>
 <script>
-$('body').on('click', '.password-checkbox', function(){
+$('body').on('click', '#show_pass', function(){
 	if ($(this).is(':checked')){
 		$('#password').attr('type', 'text');
 	} else {
