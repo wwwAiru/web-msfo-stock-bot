@@ -16,3 +16,16 @@ class Configuration(object):
     # flask-security соль и хэш для паролей
     SECURITY_PASSWORD_SALT = 'f3BkBDa8k4Wz9h'
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
+    # настройки регистрации flask_security
+    SECURITY_REGISTERABLE = True
+    SECURITY_REGISTER_URL = '/registration'
+    SECURITY_CONFIRMABLE = True
+    SECURITY_RECOVERABLE = True
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 465
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
+    MAIL_USERNAME = '*'
+    MAIL_PASSWORD = '*'
+    MAIL_DEFAULT_SENDER = '*'
+

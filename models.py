@@ -25,6 +25,7 @@ class Records(data_base.Model):
     # дата и время добавления в б.д.
     updated = data_base.Column(data_base.DateTime, default=datetime.now())
 
+
     # *args список позиционных аргументов, **kwargs словарь именованных аргументов
     def __init__(self, *args, **kwargs):
         # вызываем конструктор клааса предка Model у класса Records
@@ -52,12 +53,15 @@ roles_users = data_base.Table('roles_users',
 
 class User(data_base.Model, UserMixin):
     id = data_base.Column(data_base.Integer(), primary_key=True)
-    full_name = data_base.Column(data_base.String(255))
-    gender = data_base.Column(data_base.String(100))
-    birthdate = data_base.Column(data_base.Date())
     email = data_base.Column(data_base.String(100), unique=True)
     password = data_base.Column(data_base.String(255))
+    last_name = data_base.Column(data_base.String(50))
+    first_name = data_base.Column(data_base.String(50))
+    middle_name = data_base.Column(data_base.String(50))
+    gender = data_base.Column(data_base.String(100))
+    birthdate = data_base.Column(data_base.Date())
     updated = data_base.Column(data_base.DateTime, default=datetime.now())
+    confirmed_at = data_base.Column(data_base.DateTime())
     active = data_base.Column(data_base.Boolean())
     # св-во таблицы
     roles = data_base.relationship('Role', secondary=roles_users, backref=data_base.backref('users', lazy='dynamic'))
