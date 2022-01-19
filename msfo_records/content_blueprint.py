@@ -3,7 +3,7 @@ from models import Records
 from .forms import Record_form
 from app import data_base
 from datetime import datetime
-from flask_security import login_required
+from flask_security import login_required, roles_accepted, current_user
 
 
 # блюпринт кусок изолированной функциональности
@@ -17,7 +17,7 @@ msfo_records = Blueprint('msfo_records', __name__, template_folder='templates')
 @msfo_records.route('/', methods=['POST', 'GET'])
 def index():
     # добавление компании.
-    if request.method == 'POST':
+    if request.method == 'POST' and (current_user.has_role('editor') or current_user.has_role('admin')):
         company_name = request.form['company_name']
         short_info = request.form['short_info']
         long_info = request.form['long_info']
@@ -61,6 +61,7 @@ def index():
 # роут для формы редактирования записи
 @msfo_records.route('/<slug>/edit/', methods=['POST', 'GET'])
 @login_required
+@roles_accepted('admin', 'editor')
 def edit_record(slug):
     # получаем данные конкретной компании по слагу
     record = Records.query.filter(Records.slug == slug).first()
@@ -73,7 +74,7 @@ def edit_record(slug):
         form.populate_obj(record)
         # комит для б.д. чтобы сохранить изменения
         data_base.session.commit()
-        return redirect( url_for('msfo_records.record_detail', slug=record.slug) )
+        return redirect( url_for('msfo_records.index', slug=record.slug) )
 
     form = Record_form(obj=record)
     return render_template('msfo_records/edit_record.html', record=record, form=form)
