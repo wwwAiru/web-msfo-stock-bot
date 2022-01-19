@@ -10,31 +10,38 @@
 {% endblock %}
 
 
-{% block content %}
+{% block add_company_form %}
 
 <!-- объект current_user в шаблонизаторе по умолчанию, метод has_role() в классе UserMixin (models.py) -->
 
-{% if current_user.has_role('admin') %}
+{% if current_user.has_role('admin') or current_user.has_role('editor') %}
 
 <!-- циклом выводятся поля формы из бэка, в скобках можно каждому полю присвоить класс из CSS стилей -->
 
 <form action="{{ url_for('msfo_records.index')}}" method="POST">
     {% for field in form %}
-    <div class="form-group col-4">
         {{ field.label(class="control-label") }}
-        {{ field(class="form-control") }}
-    </div>
+        {{ field(class="form-control") }}<br>
     {% endfor %}
     <button type="submit" class="btn btn-outline-success" style="background-color: #7fffd4">Добавить</button>
 </form>
 
 {% endif %}
 
+{% endblock %}
+
+
+
+
+{% block content %}
 
 <table class="table">
     <thead>
     <tr>
         <th scope="col">Компания</th>
+        {% if current_user.has_role('admin') or current_user.has_role('editor')%}
+            <th scope="col"></th>
+        {% endif %}
         <th scope="col">Краткий отчёт</th>
         <th scope="col">Ссылка на полный отчёт</th>
         <th scope="col">Дата обновления</th>
@@ -54,6 +61,16 @@
         <td class="col-2"><a href="{{ url_for('msfo_records.record_detail', slug=record.slug) }}">
             {{ record.company_name }}</a>
         </td>
+        {% if current_user.has_role('admin') or current_user.has_role('editor') %}
+        <td class="col-1">
+            <button id={{record.slug}}
+                    class="btn btn-outline-success"
+                    style="background-color: #7fffd4"
+                    onclick='window.location.href="{{ url_for('msfo_records.edit_record', slug=record.slug) }}"' method="POST">
+                    Редактировать
+            </button>
+        </td>
+        {% endif %}
         <td class="col-8"><textarea class="col-10"> {{ record.short_info }}</textarea></td>
         <td class="col-3"><a href="{{ record.long_info }}">{{ record.long_info }}</a></td>
 
