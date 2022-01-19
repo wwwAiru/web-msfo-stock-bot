@@ -68,7 +68,7 @@ class User(data_base.Model, UserMixin):
 
     # отбражение юзера в ролях админки
     def __repr__(self):
-        return f'{self.full_name} ({self.email})'
+        return f'{self.last_name} {self.first_name} {self.middle_name}  ({self.email})'
 
 class Role(data_base.Model, RoleMixin):
     id = data_base.Column(data_base.Integer(), primary_key=True)
