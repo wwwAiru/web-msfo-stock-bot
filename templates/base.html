@@ -63,7 +63,8 @@
                 {% endif %}
 
             </ul>
-
+            <!-- строка поиска отображается только на странице с таблицей отчётов -->
+            {% if request.url_rule.endpoint == "msfo_records.index"%}
             <form class="d-flex flex-sm-fill text-sm-center nav-link" method="GET">
                 <!-- name="search" - задаём имя переменной, request - это глобальный зарезервированный объект flask'a,
                 метод args - словарь объекта request, метод словаря get выдаёт значению по ключу search, если ничего нет,
@@ -72,7 +73,7 @@
                        name="search" value="{{ request.args.get('search', '') }}">
                 <button class="btn btn-outline-success" style="background-color: #7fffd4" type="submit">Найти</button>
             </form>
-
+            {% endif %}
         </div>
 
     </div>
@@ -84,6 +85,16 @@
         {% block content_title %}
         {% endblock %}
     </h2>
+
+
+<br>
+<div class="form-group col-4">
+{% block add_company_form %}
+{% endblock %}
+</div>
+<br>
+</div>
+<div class="container">
     {% block content %}
     {% endblock %}
 </div>
