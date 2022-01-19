@@ -1,15 +1,11 @@
 from app import data_base
 from datetime import datetime
-import re
 from flask_security import UserMixin, RoleMixin
+# библиотека для транслита слагификации
+from pytils.translit import slugify
 
 
-# функция слагификации
-def slugify(s):
-    # r сообщает интерпретатору считывать знаки и символы "как есть"
-    pattern = r'[^\w+]'
-    # ищет по шаблону pattern меняет на "-" в переменной s
-    return re.sub(pattern, '-', s)
+
 
 # Модель запросов в б.д.
 class Records(data_base.Model):
