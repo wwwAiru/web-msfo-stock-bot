@@ -11,10 +11,10 @@ class ExtendedRegisterForm(ConfirmRegisterForm):
                                                      length(min=8, max=255,
                                                             message='Пароль должен быть не менее 8 символов. '),
                                                      Regexp(
-                                                         '(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%\-*#?&;:"\'])[A-Za-z\d@$!%\-*#?&;:"\']',
+                                                         '(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_@$!%\-*#?&;:"\'])[A-Za-z\d_@$!%\-*#?&;:"\']',
                                                          message=
                                                          'Пароль должен содержать минимум один символ в нижнем регистре, '
-                                                         'один в верхнем регистре, цифру, спецсимвол например: @$!%\-*#?&;:"\' ')])
+                                                         'один в верхнем регистре, цифру, спецсимвол например: _@$!%\-*#?&;:"\' ')])
 
     password_confirm = PasswordField('Повторите пароль: ', validators=[InputRequired()])
     first_name = StringField('Имя: ', validators=[InputRequired(), length(max=50)])
