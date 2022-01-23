@@ -1,4 +1,9 @@
 from datetime import datetime
+import os
+
+# временная мера
+with open('dllb.txt', 'r', encoding="utf-8") as f:
+    passw = f.read()
 
 class Configuration(object):
 
@@ -31,9 +36,9 @@ class Configuration(object):
     MAIL_PORT = 465
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
-    MAIL_USERNAME = '*'
-    MAIL_PASSWORD = '*'
-    MAIL_DEFAULT_SENDER = '*'
+    MAIL_USERNAME = 'msfostockbot@gmail.com'
+    MAIL_PASSWORD = passw
+    MAIL_DEFAULT_SENDER = 'msfostockbot@gmail.com'
     # тема для письма подтверждения
     SECURITY_EMAIL_SUBJECT_CONFIRM = 'Техническое письмо'
     # перенаправление после подтверждения
