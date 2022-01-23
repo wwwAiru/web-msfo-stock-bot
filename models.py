@@ -59,6 +59,7 @@ class User(data_base.Model, UserMixin):
     updated = data_base.Column(data_base.DateTime, default=datetime.now())
     confirmed_at = data_base.Column(data_base.DateTime())
     active = data_base.Column(data_base.Boolean())
+    fs_uniquifier = data_base.Column(data_base.String(64), unique=True)
     # св-во таблицы
     roles = data_base.relationship('Role', secondary=roles_users, backref=data_base.backref('users', lazy='dynamic'))
 
