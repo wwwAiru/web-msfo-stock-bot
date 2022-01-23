@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 # админка
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
-from registration_form import ExtendedRegisterForm
+from user_profile.registration_form import ExtendedRegisterForm
 from flask_security import SQLAlchemyUserDatastore, Security, current_user
 from flask_babelex import Babel
 from flask_mail import Mail
