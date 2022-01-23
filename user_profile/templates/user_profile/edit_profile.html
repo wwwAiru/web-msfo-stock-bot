@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+
+    Редактировать.
+
+{% endblock %}
+
+{% block content_title %}
+
+    Редактировать/обновить информацию.
+
+{% endblock %}
+
+
+
+{% block content %}
+<!-- параметр slug передаётся в функцию edit_record( slug ) -->
+
+<form action="{{ url_for('user_profile.edit_profile')}}" method="POST">
+    {{ form.hidden_tag() }}
+    {% for field in form if field.name not in ['password', 'email', 'submit', 'csrf_token', 'password_confirm'] %}
+    <div class="form-group col-4">
+        {{ field.label(class="control-label") }}
+        {{ field(class="form-control") }}<br>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn" style="background-color: #7fffd4">Обновить</button>
+</form>
+
+<button class="btn mt-3" style="background-color: #7fffd4" type="submit" onClick="location.href='{{ url_for('security.change_password')}}'">Сменить пароль</button>
+{% endblock %}> 
