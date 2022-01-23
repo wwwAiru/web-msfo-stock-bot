@@ -20,6 +20,8 @@ class Configuration(object):
     SECURITY_REGISTERABLE = True
     SECURITY_REGISTER_URL = '/registration'
     SECURITY_CONFIRMABLE = True
+    SECURITY_CHANGEABLE = True
+    SECURITY_TOKEN_MAX_AGE = 60
     SECURITY_RECOVERABLE = True
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
@@ -28,4 +30,20 @@ class Configuration(object):
     MAIL_USERNAME = '*'
     MAIL_PASSWORD = '*'
     MAIL_DEFAULT_SENDER = '*'
+    # тема для письма после смены пароля
+    SECURITY_EMAIL_SUBJECT_PASSWORD_CHANGE_NOTICE = ''
+    # тема для письма подтверждения
+    SECURITY_EMAIL_SUBJECT_CONFIRM = 'Техническое письмо'
+    # перенаправление после подтверждения
+    SECURITY_POST_REGISTER_VIEW = 'security.login'
+    SECURITY_POST_CONFIRM_VIEW = 'security.login'
+    # необходимость авторизации после подтверждения
+    SECURITY_AUTO_LOGIN_AFTER_CONFIRM = False
+    # вьюха после смены пароля
+    SECURITY_POST_CHANGE_VIEW = ''
+    # тема для письма
+    SECURITY_EMAIL_SUBJECT_REGISTER = 'Добро пожаловать!'
+    # сколько дней действует подтверждающая ссылка(установил сутки)
+
+    SECURITY_REDIRECT_VALIDATE_MODE = ''
 
