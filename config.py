@@ -1,3 +1,4 @@
+from datetime import datetime
 
 class Configuration(object):
 
@@ -9,6 +10,8 @@ class Configuration(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://ujkbzy:jVr8gf3BkBDb2k2I@localhost/bot_db'
+    # таймаут подключения б.д.
+    SQLALCHEMY_POOL_TIMEOUT = 28800
 
     # без ключа некоторый функционал может быть недоступен, например объект сессии(куки серв-клиент)
     SECRET_KEY = 'Hdf72Lkfj872ZWq83Lru32imn'
@@ -17,6 +20,7 @@ class Configuration(object):
     SECURITY_PASSWORD_SALT = 'f3BkBDa8k4Wz9h'
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
     # настройки регистрации flask_security
+    SECURITY_DATETIME_FACTORY = datetime.now
     SECURITY_REGISTERABLE = True
     SECURITY_REGISTER_URL = '/registration'
     SECURITY_CONFIRMABLE = True
