@@ -7,6 +7,7 @@ from flask_migrate import Migrate
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from user_profile.registration_form import ExtendedRegisterForm
+from user_profile.reset_change_forms import ExtendedResetForm, ExtendedChangeForm
 from flask_security import SQLAlchemyUserDatastore, Security, current_user
 from flask_babelex import Babel
 from flask_mail import Mail
@@ -92,5 +93,7 @@ def get_locale():
 # созд. экземпляр класса SQLAlchemyUserDatastore, аргументы: б.д., классы User и Role из models.py
 user_datastore = SQLAlchemyUserDatastore(data_base, User, Role)
 # созд. экземпляр класса Security с аргументами: приложение, объект user_datastore, кастомный класс с формой регистрации
-security = Security(app, user_datastore, confirm_register_form=ExtendedRegisterForm)
+security = Security(app, user_datastore, confirm_register_form=ExtendedRegisterForm,
+                                         reset_password_form=ExtendedResetForm,
+                                         change_password_form=ExtendedChangeForm)
 
