@@ -27,11 +27,14 @@ class Configuration(object):
     # настройки регистрации flask_security
     SECURITY_DATETIME_FACTORY = datetime.now
     SECURITY_REGISTERABLE = True
+    # необходимость авторизации после подтверждения
+    SECURITY_AUTO_LOGIN_AFTER_CONFIRM = False
     SECURITY_REGISTER_URL = '/registration'
     SECURITY_CONFIRMABLE = True
     SECURITY_CHANGEABLE = True
     SECURITY_TOKEN_MAX_AGE = 60
     SECURITY_RECOVERABLE = True
+
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
     MAIL_USE_TLS = False
@@ -39,16 +42,15 @@ class Configuration(object):
     MAIL_USERNAME = 'msfostockbot@gmail.com'
     MAIL_PASSWORD = passw
     MAIL_DEFAULT_SENDER = 'msfostockbot@gmail.com'
+
     # тема для письма подтверждения
     SECURITY_EMAIL_SUBJECT_CONFIRM = 'Техническое письмо'
     # перенаправление после подтверждения
     SECURITY_POST_REGISTER_VIEW = 'security.login'
     SECURITY_POST_CONFIRM_VIEW = 'security.login'
     # перенаправление после смены пароля
-    SECURITY_POST_CHANGE_VIEW = '/change'
-    # необходимость авторизации после подтверждения
-    SECURITY_AUTO_LOGIN_AFTER_CONFIRM = False
+    SECURITY_POST_CHANGE_VIEW = 'security.change_password'
     # тема для письма
     SECURITY_EMAIL_SUBJECT_REGISTER = 'Добро пожаловать!'
-    # сколько дней действует подтверждающая ссылка(установил сутки)
+
 
