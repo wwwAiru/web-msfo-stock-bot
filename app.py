@@ -79,6 +79,7 @@ admin = Admin(app, '@Msfo_stock_bot', template_mode='bootstrap4', url='/',
 admin.add_view(RecordsAdminView(Records, data_base.session, name='Таблица МСФО/РСБУ'))
 admin.add_view(UserAdminView(User, data_base.session, name='Пользователи'))
 admin.add_view(RoleAdminView(Role, data_base.session, name='Роли'))
+admin.add_view(RoleAdminView(AboutProject, data_base.session, name='О проекте'))
 
 
 

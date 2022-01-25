@@ -75,3 +75,11 @@ class Role(data_base.Model, RoleMixin):
 # отбражение роли в админке
     def __repr__(self):
         return self.name
+
+
+class AboutProject(data_base.Model):
+    id = data_base.Column(data_base.Integer(), primary_key=True)
+    title = data_base.Column(data_base.String(255))
+    body = data_base.Column(data_base.Text)
+    updated = data_base.Column(data_base.DateTime, default=datetime.now())
+    contact_us = data_base.Column(data_base.Text)
