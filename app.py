@@ -11,6 +11,9 @@ from user_profile.reset_change_forms import ExtendedResetForm, ExtendedChangeFor
 from flask_security import SQLAlchemyUserDatastore, Security, current_user
 from flask_babelex import Babel
 from flask_mail import Mail
+# импорт полей форм для замены полей на простенький текстовый редактор
+from wtforms import TextAreaField
+from wtforms.widgets import TextArea
 
 
 
@@ -70,6 +73,27 @@ class UserAdminView(AdminMixin, ModelView):
 class RoleAdminView(AdminMixin, ModelView):
     pass
 
+# изменение полей flask-wtf на CKeditor
+class CKTextAreaWidget(TextArea):
+    def __call__(self, field, **kwargs):
+        if kwargs.get('class'):
+            kwargs['class'] += ' ckeditor'
+        else:
+            kwargs.setdefault('class', 'ckeditor')
+        return super(CKTextAreaWidget, self).__call__(field, **kwargs)
+
+class CKTextAreaField(TextAreaField):
+    widget = CKTextAreaWidget()
+
+# CKeditor в админке('о проекте')
+class AboutAdminView(AdminMixin, ModelView):
+    extra_js = ['//cdn.ckeditor.com/4.6.0/standard/ckeditor.js']
+
+    form_overrides = {
+        'body': CKTextAreaField,
+        'title': CKTextAreaField,
+        'contact_us': CKTextAreaField
+    }
 
 # создан экземпляр класса Admin
 admin = Admin(app, '@Msfo_stock_bot', template_mode='bootstrap4', url='/',
@@ -80,7 +104,7 @@ admin = Admin(app, '@Msfo_stock_bot', template_mode='bootstrap4', url='/',
 admin.add_view(RecordsAdminView(Records, data_base.session, name='Таблица МСФО/РСБУ'))
 admin.add_view(UserAdminView(User, data_base.session, name='Пользователи'))
 admin.add_view(RoleAdminView(Role, data_base.session, name='Роли'))
-admin.add_view(RoleAdminView(AboutProject, data_base.session, name='О проекте'))
+admin.add_view(AboutAdminView(AboutProject, data_base.session, name='О проекте'))
 
 
 
