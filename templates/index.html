@@ -8,13 +8,13 @@
 
 
 {% block content_title %}
-{{ about.title }}
+{{ about.title|safe }}
 {% endblock %}
 
 
 {% block content %}
 {% include "security/_messages.html" %}
     <div class="row col-md-7 offset-md-2">
-        {{ about.body }}
+        {{ about.body|safe }}
     </div>
 {% endblock %}
