@@ -16,7 +16,8 @@ class Configuration(object):
 
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://ujkbzy:jVr8gf3BkBDb2k2I@localhost/bot_db'
     # таймаут подключения б.д.
-    SQLALCHEMY_POOL_TIMEOUT = 28800
+    SQLALCHEMY_POOL_RECYCLE = 280
+    SQLALCHEMY_POOL_SIZE = 20
 
     # без ключа некоторый функционал может быть недоступен, например объект сессии(куки серв-клиент)
     SECRET_KEY = 'Hdf72Lkfj872ZWq83Lru32imn'

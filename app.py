@@ -61,10 +61,11 @@ class RecordsAdminView(AdminMixin, BaseModelView):
     # так можно переопределить отображение форм в админ панели
     form_columns = ['company_name', 'short_info', 'long_info']
     column_searchable_list = ['company_name', 'short_info']
-
+    page_size = 5
 
 class UserAdminView(AdminMixin, ModelView):
     column_searchable_list = ['email', 'first_name', 'last_name', 'middle_name']
+    page_size = 10
 
 class RoleAdminView(AdminMixin, ModelView):
     pass
