@@ -48,6 +48,16 @@ class BaseModelView(ModelView):
         return super(BaseModelView, self).on_model_change(form, model, is_created)
 
 
+class ApiModelView(ModelView):
+    def on_model_change(self, form, model, is_created):
+        model.generate_key()
+        return super(ApiModelView, self).on_model_change(form, model, is_created)
+
+class ApiAdminView(AdminMixin ,ApiModelView):
+    column_display_pk = True
+    form_columns = ['id', 'description']
+
+
 # класс AdminView ограничивает модели представления б.д. в админке
 class AdminView(AdminMixin, ModelView):
     pass
@@ -104,7 +114,9 @@ admin = Admin(app, '@Msfo_stock_bot', template_mode='bootstrap4', url='/',
 admin.add_view(RecordsAdminView(Records, data_base.session, name='Таблица МСФО/РСБУ'))
 admin.add_view(UserAdminView(User, data_base.session, name='Пользователи'))
 admin.add_view(RoleAdminView(Role, data_base.session, name='Роли'))
+admin.add_view(ApiAdminView(ApiKey, data_base.session, name='API ключи'))
 admin.add_view(AboutAdminView(AboutProject, data_base.session, name='О проекте'))
+
 
 
 

@@ -21,7 +21,8 @@ class Configuration(object):
 
     # без ключа некоторый функционал может быть недоступен, например объект сессии(куки серв-клиент)
     SECRET_KEY = 'Hdf72Lkfj872ZWq83Lru32imn'
-
+    # Выключил ASCII чтобы jsonfy мог передавать UTF-8 символы
+    JSON_AS_ASCII = False
     # flask-security соль и хэш для паролей
     SECURITY_PASSWORD_SALT = 'f3BkBDa8k4Wz9h'
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
