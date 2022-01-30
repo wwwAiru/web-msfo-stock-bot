@@ -64,7 +64,7 @@ def index():
 @roles_accepted('admin', 'editor')
 def edit_record(slug):
     # получаем данные конкретной компании по слагу
-    record = Records.query.filter(Records.slug == slug).first()
+    record = Records.query.filter(Records.slug == slug).first_or_404()
     # добавил отдельно обновление даты т.к. в формах дата не указывается, а генерится автоматически.
     record.updated = datetime.now()
     # при пост запросе получаем в форму html данные из объекта record
@@ -85,6 +85,6 @@ def edit_record(slug):
 def record_detail(slug):
     # query.filter может выдать запрос списком если нашлось несколько результатов,
     # так как слаг уникальный, то берём первый попавшийся результат ( метод .first() )
-    record = Records.query.filter(Records.slug == slug).first()
+    record = Records.query.filter(Records.slug == slug).first_or_404()
     # возвращается страница с детальной информацией о компании
     return render_template('msfo_records/record_detail.html', record=record)
