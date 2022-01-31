@@ -13,9 +13,9 @@ def require_api_token(func):
     def check_token(*args, **kwargs):
         content_type = request.headers.get('Content-Type')
         if content_type == 'application/json':
-            data = request.get_json()
-            key = ApiKey.query.filter(ApiKey.key == data['api_session_token']).first()
-            if data['api_session_token'] != str(key):
+            incoming_key = request.headers.get('api_session_token')
+            app_api_key = ApiKey.query.filter(ApiKey.key == incoming_key).first()
+            if incoming_key != str(app_api_key):
                 return jsonify(error='доступ запрещён')
         else:
             return 'Неподдерживаемый тип контента'
@@ -32,5 +32,5 @@ def company_list():
     to_list = []
     for i in records.all():
         to_list.append(i.company_name)
-    return jsonify(company_list=f'{to_list}')
+    return jsonify(company_list=to_list)
     #return render_template('test.html', records=records)
