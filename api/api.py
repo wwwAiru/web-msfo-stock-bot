@@ -8,29 +8,44 @@ from functools import wraps
 api = Blueprint('api', __name__)
 
 # декоратор проверки токена доступа к API
-def require_api_token(func):
+def require_api_key(func):
     @wraps(func)
-    def check_token(*args, **kwargs):
+    def check_key(*args, **kwargs):
         content_type = request.headers.get('Content-Type')
         if content_type == 'application/json':
-            incoming_key = request.headers.get('api_session_token')
+            incoming_key = request.headers.get('API_KEY')
             app_api_key = ApiKey.query.filter(ApiKey.key == incoming_key).first()
             if incoming_key != str(app_api_key):
                 return jsonify(error='доступ запрещён')
         else:
             return 'Неподдерживаемый тип контента'
         return func(*args, **kwargs)
-    return check_token
+    return check_key
 
 
 
 # api роут для получения списка всех компаний из б.д.
-@api.route('/v1/company_list/', methods=['POST', 'GET'])
-@require_api_token
+@api.route('/v1/company_list', methods=['POST'])
+@require_api_key
 def company_list():
     records = Records.query.order_by(Records.company_name.asc())
     to_list = []
     for i in records.all():
         to_list.append(i.company_name)
     return jsonify(company_list=to_list)
-    #return render_template('test.html', records=records)
+
+
+# api роут для получения краткого или полного отчёта
+@api.route('/v1/company_info', methods=['POST'])
+@require_api_key
+def company_info():
+    c_name = request.get_json()
+    company = Records.query.filter(Records.company_name.contains(c_name["company_name"])).first_or_404()
+    if "info" in c_name.keys() and c_name["info"] == "short_info":
+        return jsonify(info=company.short_info)
+    elif "info" in c_name.keys() and c_name["info"] == "long_info":
+        return jsonify(info=company.long_info)
+    else:
+        return jsonify(error="не указана пара ключ-значение, пример: 'info':'short_info' ")
+
+
