@@ -1,0 +1,25 @@
+{% extends 'admin/master.html' %}
+
+
+
+{% block body %}
+
+<h1 class="text-center lh-base p-4">
+    {{ adm_info.title|safe }}
+</h1>
+
+<div class="lead text-left lh-base p-4">
+    {{ adm_info.body|safe }}
+</div>
+
+{% endblock %}
+
+
+{% block tail %}
+
+<p class="text-center lh-sm p-4">
+Обновлено: {{ adm_info.updated.strftime("%H:%M %d.%m.%Y")|safe }}
+</p>
+
+{% endblock %}
+

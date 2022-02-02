@@ -83,6 +83,12 @@ class AboutProject(data_base.Model):
     updated = data_base.Column(data_base.DateTime, default=datetime.now())
     contact_us = data_base.Column(data_base.Text)
 
+class AdminInformation(data_base.Model):
+    id = data_base.Column(data_base.Integer(), primary_key=True)
+    title = data_base.Column(data_base.String(255))
+    body = data_base.Column(data_base.Text)
+    updated = data_base.Column(data_base.DateTime, default=datetime.now())
+
 # модель генерации API ключей
 class ApiKey(data_base.Model):
     id = data_base.Column(data_base.Integer(), primary_key=True)

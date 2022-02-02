@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 # для миграций б.д.
 from flask_migrate import Migrate
 # админка
-from flask_admin import Admin, AdminIndexView
+from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
 from user_profile.registration_form import ExtendedRegisterForm
 from user_profile.reset_change_forms import ExtendedResetForm, ExtendedChangeForm
@@ -64,8 +64,11 @@ class AdminView(AdminMixin, ModelView):
 
 
 # класс AdminPanel ограничивает админ панель будучи неавторизованным
-class AdminPanel(AdminMixin, AdminIndexView):
-    pass
+class AdminPanelView(AdminMixin, AdminIndexView):
+    @expose('/')
+    def admin_index_view(self):
+        adm_info = AdminInformation.query.first()
+        return self.render('admin/index.html', adm_info=adm_info)
 
 
 # создал ещё наследников вьюх RecordsAdminView, UserAdminView, RoleAdminView
@@ -107,7 +110,7 @@ class AboutAdminView(AdminMixin, ModelView):
 
 # создан экземпляр класса Admin
 admin = Admin(app, '@Msfo_stock_bot', template_mode='bootstrap4', url='/',
-              index_view=AdminPanel(name='Панель администратора'))
+              index_view=AdminPanelView(name='Инструкция'))
 # ModelView или расширеный от него, в нашем случае, AdminView - подхватывает классы б.д. из models.py
 # и реализуем модель 'C.R.U.D.' для управлением любыми данными из б.д.
 # параметром name можно назначить название кнопок на панели администратора.
@@ -116,6 +119,7 @@ admin.add_view(UserAdminView(User, data_base.session, name='Пользовате
 admin.add_view(RoleAdminView(Role, data_base.session, name='Роли'))
 admin.add_view(ApiAdminView(ApiKey, data_base.session, name='API ключи'))
 admin.add_view(AboutAdminView(AboutProject, data_base.session, name='О проекте'))
+admin.add_view(AdminView(AdminInformation, data_base.session, name='Инструкция ред.'))
 
 
 

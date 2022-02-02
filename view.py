@@ -7,7 +7,5 @@ from models import AboutProject
 
 @app.route('/')
 def index():
-    about = AboutProject.query.one()
-    if not about:
-        about = AboutProject(title='', body='', updated=None, contact_us='' )
+    about = AboutProject.query.first()
     return render_template('index.html', about=about)
