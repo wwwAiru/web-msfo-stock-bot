@@ -15,12 +15,12 @@
 
 
 
-{% block content %}
+{% block add_company_form %}
 <!-- параметр slug передаётся в функцию edit_record( slug ) -->
 <form action="{{ url_for('msfo_records.edit_record', slug=record.slug) }}" method="POST">
 
     {% for field in form %}
-    <div class="form-group col-4">
+    <div>
         {{ field.label(class="control-label") }}
         {{ field(class="form-control") }}<br>
     </div>
