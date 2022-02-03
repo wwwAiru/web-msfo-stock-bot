@@ -6,15 +6,28 @@
     О проекте
 {% endblock %}
 
-
 {% block content_title %}
-{{ about.title|safe }}
+
+    <p class="lead text-left lh-base p-4">
+        {{ about.title|safe }}
+    </p>
+
 {% endblock %}
 
 
 {% block content %}
 {% include "security/_messages.html" %}
-    <div class="row col-md-7 offset-md-2">
+    <div class="lead text-left lh-base p-4">
         {{ about.body|safe }}
     </div>
 {% endblock %}
+
+
+
+{% block footer %}
+{{ about.contact_us|safe }}
+<div class="conteiner col-4 mx-auto">
+Обновлено {{ about.updated|safe }}
+</div>
+{% endblock %}
+
