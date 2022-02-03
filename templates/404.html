@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Страница не найдена (404)
+{% endblock %}
+
+{% block content_title %}
+
+    <p class="lh-base p-4">
+        <h1>Страница не найдена, ошибка 404</h1>
+    </p>
+
+{% endblock %}
+
+
+{% block content %}
+{% include "security/_messages.html" %}
+    <div class="lead text-center lh-base p-4">
+        Запрашиваемая страница не найдена, возможно появится в будущем =)
+    </div>
+{% endblock %}

@@ -9,3 +9,8 @@ from models import AboutProject
 def index():
     about = AboutProject.query.first()
     return render_template('index.html', about=about)
+
+# страница 404
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
