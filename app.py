@@ -100,13 +100,14 @@ class CKTextAreaField(TextAreaField):
 
 # CKeditor в админке('о проекте')
 class AboutAdminView(AdminMixin, ModelView):
-    extra_js = ['//cdn.ckeditor.com/4.6.0/standard/ckeditor.js']
+    """extra_js = ['//cdn.ckeditor.com/4.6.0/standard/ckeditor.js']
 
     form_overrides = {
         'body': CKTextAreaField,
         'title': CKTextAreaField,
         'contact_us': CKTextAreaField
-    }
+    }"""
+    pass
 
 # создан экземпляр класса Admin
 admin = Admin(app, '@Msfo_stock_bot', template_mode='bootstrap4', url='/',
