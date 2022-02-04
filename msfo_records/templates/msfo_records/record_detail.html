@@ -16,11 +16,17 @@
 {% endblock %}
 
 
+
 {% block content %}
 
-    {{ record.id }}
-    {{ record.short_info }}
-    {{ record.long_info }}
-    {{ record.updated }}
+<table class="table">
+    <td class="col-1">ID:</td><td> {{ record.id }}</td>
+    <tr>
+    <td style="vertical-align: top";>Краткий отчёт</td><td class="col-1">{{ record.short_info }}</td>
+    <tr>
+    <td>Ссылка на полный отчёт</td><td class="col-1"><a href="{{ record.long_info }}">{{ record.long_info }}</a></td>
+    <tr>
+    <td>Дата обновления</td><td class="col-1">{{ record.updated.strftime("%d.%m.%Y %H:%M") }}</td>
+</table>
 
 {% endblock %}
