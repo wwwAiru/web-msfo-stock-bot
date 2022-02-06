@@ -1,0 +1,45 @@
+
+.navbar-light {
+    border-radius: 10px;
+    background-color: #7fff926b;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+ }
+
+.navbar-brand {
+    margin-left: 1rem;
+}
+
+.nav-item {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+
+.btn-outline-success {
+    background-color: #7fff926b;
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:visited {
+    background-color: #7fffd4;
+}
+
+
+.page-item.active .page-link {
+    color: #48bf0bd9;
+    background-color: #7fff926b;
+    border-color: #7fff926b;
+}
+
+
+.page-link {
+    position: relative;
+    display: block;
+    color: #48bf0bd9;
+}
+
+a {
+    color:#27d2e3
+}
+

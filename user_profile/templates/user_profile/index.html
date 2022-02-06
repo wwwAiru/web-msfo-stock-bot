@@ -29,8 +29,8 @@
           <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">Дата рождения: {{ current_user.birthdate.strftime("%d.%m.%Y") }}</span> <span><i class="fa fa-copy"></i></span> </div>
           <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">ID: {{ current_user.id }}</span> <span><i class="fa fa-copy"></i></span> </div>
           <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">Роль: {{ current_user.roles }}</span> <span><i class="fa fa-copy"></i></span> </div>
-          <div class=" d-flex mt-2"> <button class="btn" style="background-color: #7fffd4" type="submit" onClick="location.href='{{ url_for('user_profile.edit_profile')}}'">Редактировать профиль</button> </div>
-          <div class=" d-flex mt-2"> <button class="btn" style="background-color: #7fffd4" type="submit" onClick="location.href='{{ url_for('security.change_password')}}'">Сменить пароль</button> </div>
+          <div class=" d-flex mt-2"> <button class="btn btn-outline-success" type="submit" onClick="location.href='{{ url_for('user_profile.edit_profile')}}'">Редактировать профиль</button> </div>
+          <div class=" d-flex mt-2"> <button class="btn btn-outline-success" type="submit" onClick="location.href='{{ url_for('security.change_password')}}'">Сменить пароль</button> </div>
             <div class=" px-2 rounded mt-4 date "> <span class="join">Профиль создан {{ current_user.confirmed_at.strftime("%d.%m.%Y") }}</span> </div>
         </div>
     </div>

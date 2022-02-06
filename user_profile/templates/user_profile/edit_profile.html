@@ -26,8 +26,8 @@
         {{ field(class="form-control") }}<br>
     </div>
     {% endfor %}
-    <button type="submit" class="btn" style="background-color: #7fffd4">Обновить</button>
+    <button type="submit" class="btn btn-outline-success">Обновить</button>
 </form>
 
-<button class="btn mt-3" style="background-color: #7fffd4" type="submit" onClick="location.href='{{ url_for('security.change_password')}}'">Сменить пароль</button>
+<button class="btn btn-outline-success mt-3" type="submit" onClick="location.href='{{ url_for('security.change_password')}}'">Сменить пароль</button>
 {% endblock %}> 

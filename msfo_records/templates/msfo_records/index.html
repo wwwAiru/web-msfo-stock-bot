@@ -23,7 +23,7 @@
         {{ field.label(class="control-label") }}
         {{ field(class="form-control") }}<br>
     {% endfor %}
-    <button type="submit" class="btn btn-outline-success" style="background-color: #7fffd4">Добавить</button>
+    <button type="submit" class="btn btn-outline-success">Добавить</button>
 </form>
 
 {% endif %}
@@ -65,7 +65,7 @@
         <td class="col-1">
             <button id={{record.slug}}
                     class="btn btn-outline-success"
-                    style="background-color: #7fffd4"
+
                     onclick='window.location.href="{{ url_for('msfo_records.edit_record', slug=record.slug) }}"' method="POST">
                     Редактировать
             </button>
