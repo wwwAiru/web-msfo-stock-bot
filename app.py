@@ -67,7 +67,7 @@ class AdminView(AdminMixin, ModelView):
 class AdminPanelView(AdminMixin, AdminIndexView):
     @expose('/')
     def admin_index_view(self):
-        adm_info = AdminInformation.query.first()
+        adm_info = AdminInformation.query.first_or_404()
         return self.render('admin/index.html', adm_info=adm_info)
 
 
