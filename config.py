@@ -2,23 +2,21 @@ from datetime import datetime
 import os
 
 # временная мера
-with open('dllb.txt', 'r', encoding="utf-8") as f:
+with open('pww91.wim', 'r', encoding="utf-8") as f:
     passw = f.read()
 
 class Configuration(object):
 
     # режим отладки приложения позволяет применять изменения в коде без перезагрузки
     DEBUG = True
-
     # Если SQLALCHEMY_TRACK_MODIFICATIONS установлен в True, то Flask-SQLAlchemy будет отслеживать изменения объектов и
     # посылать алерты. Отключил чтобы не влиял на производительность.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://ujkbzy:jVr8gf3BkBDb2k2I@localhost/bot_db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///db.db3'
     # таймаут подключения б.д.
-    SQLALCHEMY_POOL_RECYCLE = 60
-    SQLALCHEMY_POOL_SIZE = 20
-
+   # SQLALCHEMY_POOL_RECYCLE = 60
+   # SQLALCHEMY_POOL_SIZE = 20
     # без ключа некоторый функционал может быть недоступен, например объект сессии(куки серв-клиент)
     SECRET_KEY = 'Hdf72Lkfj872ZWq83Lru32imn'
     # Выключил ASCII чтобы jsonfy мог передавать UTF-8 символы
