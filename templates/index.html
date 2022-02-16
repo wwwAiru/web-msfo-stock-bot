@@ -25,9 +25,10 @@
 
 
 {% block footer %}
-{{ about.contact_us|safe }}
-<div class="conteiner col-4 mx-auto">
-Обновлено {{ about.updated|safe }}
+
+<div class="conteiner text-center mx-auto">
+    {{ about.contact_us|safe }}
+    Обновлено {{ about.updated|safe }}
 </div>
 {% endblock %}
 
