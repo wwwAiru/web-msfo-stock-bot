@@ -16,7 +16,7 @@ def require_api_key(func):
         app_api_keys = [x.key for x in data_base.session.query(ApiKey.key).distinct()]
         if content_type == 'application/json':
             if incoming_key not in app_api_keys:
-                return jsonify(error=incoming_key)
+                return jsonify(error="ключ не валидный")
         else:
             return 'Неподдерживаемый тип контента'
         return func(*args, **kwargs)
