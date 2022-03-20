@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+
+{% block title %}
+
+    Создать тестового пользователя.
+
+{% endblock %}
+
+{% block content_title %}
+
+    Создать тестового пользователя.
+
+{% endblock %}
+
+
+
+{% block add_company_form %}
+{% include "security/_messages.html" %}
+<!-- параметр slug передаётся в функцию edit_record( slug ) -->
+<form action="{{ url_for('user_profile.create_test_user') }}" method="POST">
+    {{ test_user_form.hidden_tag() }}
+    {% for field in test_user_form if field.name not in ['csrf_token'] %}
+    <div>
+        {{ render_field_with_errors(field, class="form-control") }}
+    </div>
+    {% endfor %}
+    <label><input type="checkbox" class="form-check-input"> Показать пароль </label>
+   <br>
+   <p>
+       <button type="submit" class="btn btn-outline-success"> Создать </button>
+   </p>
+
+
+</form>
+
+
+
+
+<!-- JS и чекбокс показать пароль -->
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.6.0.min.js') }}"></script>
+<script>
+$('body').on('click', '.form-check-input', function(){
+	if ($(this).is(':checked')){
+		$('#password').attr('type', 'text');
+		$('#password_confirm').attr('type', 'text');
+	} else {
+		$('#password').attr('type', 'password');
+		$('#password_confirm').attr('type', 'password');
+	}
+});
+</script>
+
+{% endblock %}
