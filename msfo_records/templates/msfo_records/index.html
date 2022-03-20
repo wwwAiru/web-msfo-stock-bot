@@ -19,7 +19,7 @@
 <!-- циклом выводятся поля формы из бэка, в скобках можно каждому полю присвоить класс из CSS стилей -->
 
 <form action="{{ url_for('msfo_records.index')}}" method="POST">
-    {% for field in form %}
+    {% for field in form if field.name not in ['csrf_token'] %}
         {{ field.label(class="control-label") }}
         {{ field(class="form-control") }}<br>
     {% endfor %}
