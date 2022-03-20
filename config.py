@@ -12,7 +12,6 @@ class Configuration(object):
     # Если SQLALCHEMY_TRACK_MODIFICATIONS установлен в True, то Flask-SQLAlchemy будет отслеживать изменения объектов и
     # посылать алерты. Отключил чтобы не влиял на производительность.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.db3'
     # таймаут подключения б.д.
    # SQLALCHEMY_POOL_RECYCLE = 60
@@ -32,16 +31,16 @@ class Configuration(object):
     SECURITY_REGISTER_URL = '/registration'
     SECURITY_CONFIRMABLE = True
     SECURITY_CHANGEABLE = True
-    SECURITY_TOKEN_MAX_AGE = 60
     SECURITY_RECOVERABLE = True
-
-    MAIL_SERVER = 'smtp.gmail.com'
+    SECURITY_TOKEN_MAX_AGE = 60*60*24*3
+    # настройки почтового сервера
+    MAIL_SERVER = 'smtp.mail.ru'
     MAIL_PORT = 465
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
-    MAIL_USERNAME = 'msfostockbot@gmail.com'
+    MAIL_USERNAME = 'msfostockbot@mail.ru'
     MAIL_PASSWORD = passw
-    MAIL_DEFAULT_SENDER = 'msfostockbot@gmail.com'
+    MAIL_DEFAULT_SENDER = 'msfostockbot@mail.ru'
 
     # тема для письма подтверждения
     SECURITY_EMAIL_SUBJECT_CONFIRM = 'Техническое письмо'
