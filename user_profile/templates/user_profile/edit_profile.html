@@ -28,6 +28,7 @@
     {% endfor %}
     <button type="submit" class="btn btn-outline-success">Обновить</button>
 </form>
-
-<button class="btn btn-outline-success mt-3" type="submit" onClick="location.href='{{ url_for('security.change_password')}}'">Сменить пароль</button>
-{% endblock %}> 
+{% if security.change_password %}
+    <button class="btn btn-outline-success mt-3" type="submit" onClick="location.href='{{ url_for('security.change_password')}}'">Сменить пароль</button>
+{% endif %}
+{% endblock %}
