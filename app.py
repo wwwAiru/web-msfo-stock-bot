@@ -138,5 +138,6 @@ user_datastore = SQLAlchemyUserDatastore(data_base, User, Role)
 # созд. экземпляр класса Security с аргументами: приложение, объект user_datastore, кастомный класс с формой регистрации
 security = Security(app, user_datastore, confirm_register_form=ExtendedRegisterForm,
                                          reset_password_form=ExtendedResetForm,
-                                         change_password_form=ExtendedChangeForm)
+                                         change_password_form=ExtendedChangeForm,
+                                         register_form=ExtendedRegisterForm)
 
