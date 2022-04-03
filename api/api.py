@@ -12,11 +12,11 @@ def require_api_key(func):
     @wraps(func)
     def check_key(*args, **kwargs):
         content_type = request.headers.get('Content-Type')
+        incoming_key = request.headers.get('api-key')
+        app_api_keys = [x.key for x in data_base.session.query(ApiKey.key).distinct()]
         if content_type == 'application/json':
-            incoming_key = request.headers.get('API_KEY')
-            app_api_key = ApiKey.query.filter(ApiKey.key == incoming_key).first()
-            if incoming_key != str(app_api_key):
-                return jsonify(error='доступ запрещён')
+            if incoming_key not in app_api_keys:
+                return jsonify(error="ключ не валидный")
         else:
             return 'Неподдерживаемый тип контента'
         return func(*args, **kwargs)

@@ -1,5 +1,5 @@
 from app import data_base
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_security import UserMixin, RoleMixin
 # библиотека для транслита слагификации
 from pytils.translit import slugify
@@ -18,7 +18,7 @@ class Records(data_base.Model):
     # полный отчёт(ссылка)
     long_info = data_base.Column(data_base.String(300))
     # дата и время добавления в б.д.
-    updated = data_base.Column(data_base.DateTime, default=datetime.now())
+    updated = data_base.Column(data_base.DateTime, default=datetime.utcnow()+timedelta(hours=3))
 
     # *args список позиционных аргументов, **kwargs словарь именованных аргументов
     def __init__(self, *args, **kwargs):
@@ -54,7 +54,7 @@ class User(data_base.Model, UserMixin):
     middle_name = data_base.Column(data_base.String(50))
     gender = data_base.Column(data_base.String(100))
     birthdate = data_base.Column(data_base.Date())
-    updated = data_base.Column(data_base.DateTime, default=datetime.now())
+    updated = data_base.Column(data_base.DateTime, default=datetime.utcnow()+timedelta(hours=3))
     confirmed_at = data_base.Column(data_base.DateTime())
     active = data_base.Column(data_base.Boolean())
     fs_uniquifier = data_base.Column(data_base.String(64), unique=True)
@@ -80,14 +80,14 @@ class AboutProject(data_base.Model):
     id = data_base.Column(data_base.Integer(), primary_key=True)
     title = data_base.Column(data_base.String(255))
     body = data_base.Column(data_base.Text)
-    updated = data_base.Column(data_base.DateTime, default=datetime.now())
+    updated = data_base.Column(data_base.DateTime, default=datetime.utcnow()+timedelta(hours=3))
     contact_us = data_base.Column(data_base.Text)
 
 class AdminInformation(data_base.Model):
     id = data_base.Column(data_base.Integer(), primary_key=True)
     title = data_base.Column(data_base.String(255))
     body = data_base.Column(data_base.Text)
-    updated = data_base.Column(data_base.DateTime, default=datetime.now())
+    updated = data_base.Column(data_base.DateTime, default=datetime.utcnow()+timedelta(hours=3))
 
 # модель генерации API ключей
 class ApiKey(data_base.Model):

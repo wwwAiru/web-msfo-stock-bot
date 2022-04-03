@@ -43,3 +43,7 @@ a {
     color:#27d2e3
 }
 
+.short_info {
+    min-height: 100px;
+}
+

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from models import Records
 from .forms import Record_form
 from app import data_base
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_security import login_required, roles_accepted, current_user
 
 
@@ -66,7 +66,7 @@ def edit_record(slug):
     # получаем данные конкретной компании по слагу
     record = Records.query.filter(Records.slug == slug).first_or_404()
     # добавил отдельно обновление даты т.к. в формах дата не указывается, а генерится автоматически.
-    record.updated = datetime.now()
+    record.updated = datetime.utcnow()+timedelta(hours=3)
     # при пост запросе получаем в форму html данные из объекта record
     if request.method == 'POST':
         form = Record_form(formdata=request.form, obj=record)

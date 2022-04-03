@@ -5,3 +5,7 @@
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/.gitignore
+/__pycache__/
+/api/__pycache__/
+/msfo_records/__pycache__/
+/user_profile/__pycache__/
